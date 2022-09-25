@@ -1,5 +1,5 @@
 \appendix
-\section{Appendix}
+\section{Expectation values and variances for ordinary least squares}\label{app:ols_expactation_variance}
 
 We use that the dependent variable
 $$
@@ -20,7 +20,7 @@ We now use that $\epsilon_i$ is a normal distributed error, meaning that $\mathb
 \mathbb{E}[y_i] = \mathbf X_{i*}\boldsymbol{\beta}.
 \end{equation}
 
-We then calulate the variance
+We then calculate the variance
 
 
 \begin{align*}
@@ -59,22 +59,21 @@ We then calculate the expectation value of the optimal parameter
 $$
 \mathbb{E}(\boldsymbol{\hat{\beta}}) = \mathbb{E}[ (\mathbf{X}^{\top} \mathbf{X})^{-1}\mathbf{X}^{T} \mathbf{y}]=(\mathbf{X}^{T} \mathbf{X})^{-1}\mathbf{X}^{T} \mathbb{E}[ \mathbf{y}],
 $$
-where we assume that $\mathbf{X}$ is non stochastic. Using equation (\ref{eq:expectation_yi}) on vector form we get
+where we assume that $\mathbf{X}$ is non stochastic. Using the expectation value from equation (\ref{eq:expectation_yi}) on vector form we get
 
 \begin{equation}\label{eq:expectation_beta}
 \mathbb{E}(\boldsymbol{\hat{\beta}}) = (\mathbf{X}^{T} \mathbf{X})^{-1} \mathbf{X}^{T}\mathbf{X}\boldsymbol{\beta}=\boldsymbol{\beta}.
 \end{equation}
 
+We then calculate the variance of the optimal parameter
 
-
-OKAY!!!! OKAY!!!! OKAY!!!!
 
 
 \begin{align*}
 \mbox{Var}(\boldsymbol{\hat{\beta}}) 
-&= \mathbb{E} \{ [\boldsymbol{\beta} - \mathbb{E}(\boldsymbol{\beta})] [\boldsymbol{\beta} - \mathbb{E}(\boldsymbol{\beta})]^{T} \}
+&= \mathbb{E}[(\boldsymbol{\hat\beta} - \mathbb{E}[\boldsymbol{\hat\beta}])^2 ]
 \\
-&= \mathbb{E}[(\hat\beta - \mathbb{E}[\boldsymbol\beta])^2 ]
+&= \mathbb{E}[((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}-\boldsymbol\beta)^2] 
 \\
 &= \mathbb{E} \{ [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y} - \boldsymbol{\beta}] \, [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y} - \boldsymbol{\beta}]^{T} \}
 \\
@@ -92,10 +91,6 @@ OKAY!!!! OKAY!!!! OKAY!!!!
  =  \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1},
 \end{align*}
 
-
-
-
-
-
-
-!!!!! !!!! IKKE FERDIG !!!!! !!!!!
+\begin{equation}\label{eq:var_beta}
+\mbox{Var}(\boldsymbol{\hat{\beta}})  = \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1}.
+\end{equation}

@@ -7,7 +7,7 @@
 In machine learning we call the independent variable $\mathbf{x}$ a feature and the dependent variable $\mathbf{y}$ a response. A regression model aims at finding a likelihood function $p(\mathbf{y}|\mathbf{x})$, that is the conditional distribution for $\mathbf{y}$ with a given $\mathbf{x}$. The estimation of $p(\mathbf{y}|\mathbf{x})$ is made using a data set with $n$ cases $i=0,1,2,...,n-1$ of a response variable $y_i$ and a set of predictor variables $\mathbf{x}_i=[x_{i0}, x_{i1},...,x_{ip-1}]$. The set of these vectors $\mathbf{X}=[\mathbf{x}_{0}\ \mathbf{x}_{1}\ ...\ \mathbf{x}_{n-1}]$ is called the design matrix of the model. 
 
 
-The aim of regression analysis is to explain $\mathbf y$ in terms of $\mathbf X$ through a functional relationship like $y_i=f(\mathbf{X}_{i*})$. When no prior knowledge on the form of $f(\dot)$ is available, it is common to assume a linear relationship between $\mathbf{X}$ and $\mathbf{y}$. This assumption gives rise to the linear regression model where $\boldsymbol\beta=\left[\beta_0, \beta_1, ..., \beta_{p-1} \right]^T$ are the regression parameters and the error variable $\boldsymbol\epsilon$ is an unobserved random variable that adds "noise" to the linear relationship between the dependent variable and regressors, so that our model becomes
+The aim of regression analysis is to explain $\mathbf y$ in terms of $\mathbf X$ through a functional relationship like $y_i=f(\mathbf{X}_{i*})$. When no prior knowledge on the form of $f( \cdot )$ is available, it is common to assume a linear relationship between $\mathbf{X}$ and $\mathbf{y}$. This assumption gives rise to the linear regression model where $\boldsymbol\beta=\left[\beta_0, \beta_1, ..., \beta_{p-1} \right]^T$ are the regression parameters and the error variable $\boldsymbol\epsilon$ is an unobserved random variable that adds "noise" to the linear relationship between the dependent variable and regressors, so that our model becomes
 
 $$
 \tilde{y}(x_i) = \sum_{j=0}^{p-1} \beta_j x_{ij}=\mathbf X_{i*}\boldsymbol{\beta}.
@@ -24,9 +24,22 @@ These $n$ equations can be written on matrix form as
     \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 \end{equation}
 
+We get that the expectations value of this is
+
+\begin{equation}\label{eq:expectation_y}
+\mathbb{E}[\mathbf y] = \mathbf{X}\boldsymbol{\beta}
+\end{equation}
+and that the variance is
+
+OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!
+\begin{equation}\label{eq:variance_y}
+\mbox{Var}
+\end{equation}
+OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!
+
 \subsubsection{Ordinary least squares}
 
-The method of ordinary least squares computes the unique line that minimizes the sum of squared differences between the true data and that line. 
+The method of ordinary least squares computes the unique line that minimises the sum of squared differences between the true data and that line. 
 
 We define the cost function for ordinary least squares as the mean squared error
 
@@ -41,7 +54,7 @@ $$
 C(\boldsymbol\beta) = \frac{1}{n}\sum_{i=0}^{n-1}(y_i-\tilde{y}_i)^2=\frac{1}{n}\left[(\mathbf{y}-\mathbf{X}\boldsymbol\beta)^T(\mathbf{y}-\mathbf{X}\boldsymbol\beta) \right].
 $$
 
-We call optimal parameter $\hat{\boldsymbol\beta}$ the one that minimizes the cost function. This will be a zero of the derivative
+We call optimal parameter $\hat{\boldsymbol\beta}$ the one that minimises the cost function. This will be a zero of the derivative
 
 $$
 \frac{\partial \boldsymbol\beta}{\partial \beta_j} = 0.
@@ -58,7 +71,10 @@ Rewriting this we get that
 \begin{equation}\label{eq:beta_OLS}
     \hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
 \end{equation}
-is the optimal parameter if the Hessian matrix $\mathbf{H}=(\mathbf{X}^T\mathbf{X})$ is invertible.
+is the optimal parameter if the Hessian matrix $\mathbf{H}=(\mathbf{X}^T\mathbf{X})$ is invertible. 
+
+
+In appendix \ref{app:ols_expactation_variance}.
 
 OG HER REFERER DU TIL APPENDIX OSV. STATE EXPECTATION VALUE OG VARIANCE FOR DE TO GREIENE!!!!
 !!!!
@@ -67,4 +83,26 @@ OG HER REFERER DU TIL APPENDIX OSV. STATE EXPECTATION VALUE OG VARIANCE FOR DE T
 
 \subsubsection{Lasso}
 
+\subsection{Bias-Variance tradeoff}
+I HAVE NOT STARTED WRITING HERE YET! JUST PLUGGED IN EQUATIONS!
+
+Assumption for this calculation: y=f(x)+epsilon. And f(x) is assumed to be a deterministic function. This makes $E[f]=f=E[y]$ (unbiased function)
+
+$$
+\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\mathbb{E}\left[(\mathbf{f}+\mathbf{\epsilon}-\mathbf{\tilde{y}})^2\right],
+$$
+
+Adding and subtracting $\mathbb{E}\left[\mathbf{\tilde{y}}\right]$
+
+$$
+\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\mathbb{E}\left[(\mathbf{f}+\mathbf{\epsilon}-\mathbf{\tilde{y}}+\mathbb{E}\left[\mathbf{\tilde{y}}\right]-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right],
+$$
+
+$$
+\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\mathbb{E}\left[(\mathbf{y}-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right]+\mathrm{Var}\left[\mathbf{\tilde{y}}\right]+\sigma^2,
+$$
+
+$$
+\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\left(\mbox{Bias}\left[{\tilde y}\right] \right)^2 + \mbox{Var}\left[{\tilde f} \right] + \sigma^2
+$$
 
