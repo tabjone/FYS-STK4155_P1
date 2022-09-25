@@ -1,2 +1,101 @@
 \appendix
 \section{Appendix}
+
+We use that the dependent variable
+$$
+y_i = y(x_i) = \tilde{y}_i + \varepsilon_i = \mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i,
+$$
+
+to get the expectation value
+
+
+
+$$
+\mathbb{E}[y_i] = \mathbb{E}[\mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i] = \mathbb{E}[\mathbf X_{i*}\boldsymbol{\beta}] + \mathbb{E}[\epsilon_i].
+$$
+
+We now use that $\epsilon_i$ is a normal distributed error, meaning that $\mathbb{E}[\epsilon_i]=0$. And we assume that $\mathbf X_{i*}\boldsymbol{\beta}$ are not stocastic variables, giving $\mathbb{E}[\mathbf X_{i*}\boldsymbol{\beta}]=\mathbf X_{i*}\boldsymbol{\beta}$. Then the expectaion value is
+
+\begin{equation}\label{eq:expectation_yi}
+\mathbb{E}[y_i] = \mathbf X_{i*}\boldsymbol{\beta}.
+\end{equation}
+
+We then calulate the variance
+
+
+\begin{align*}
+\mbox{Var}[y_i] =& \mathbb{E}[y_i^2] - (\mathbb{E}[y_i])^2 = \mathbb{E}[(\mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i)^2]- (\mathbf X_{i*}\boldsymbol{\beta})^2
+\\
+\ =& \mathbb{E}[(\mathbf X_{i*}\boldsymbol{\beta})^2+2\epsilon_i \mathbf X_{i*}\boldsymbol{\beta}+\epsilon_i^2]-(\mathbf X_{i*}\boldsymbol{\beta})^2
+\\
+\ =& \mathbb{E}[(\mathbf X_{i*}\boldsymbol{\beta})^2] + \mathbb{E}[2\epsilon_i \mathbf X_{i*}\boldsymbol{\beta}] + \mathbb{E}[\epsilon_i^2]-(\mathbf X_{i*}\boldsymbol{\beta})^2
+\\
+\ =& (\mathbf X_{i*}\boldsymbol{\beta})^2 + 2\mathbf X_{i*}\boldsymbol{\beta}\mathbb{E}[\epsilon_i ] + \mathbb{E}[\epsilon_i^2]-(\mathbf X_{i*}\boldsymbol{\beta})^2
+\\
+\ =& 2\mathbf X_{i*}\boldsymbol{\beta}\mathbb{E}[\epsilon_i ] + \mathbb{E}[\epsilon_i^2],
+\end{align*}
+
+
+where we have taken the non stochastic variables out of the expectation value. We again use that the expectation value of a normal distributed variable is $\mathbb{E}[\epsilon_i ]=0$, and see that the variance of this variable is
+$$
+\mbox{Var}[\epsilon_i]=\mathbb{E}[\epsilon_i^2 ]-(\mathbb{E}[\epsilon_i ])^2=\mathbb{E}[\epsilon_i^2 ]=\sigma^2.
+$$
+Using this we get
+\begin{equation}\label{eq:var_yi}
+\mbox{Var}[y_i] = \sigma^2.
+\end{equation}
+
+
+
+The optimal parameter $\hat{\boldsymbol{\beta}}$ for ordinary least squares is given by
+
+$$
+\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+$$
+
+
+We then calculate the expectation value of the optimal parameter
+
+$$
+\mathbb{E}(\boldsymbol{\hat{\beta}}) = \mathbb{E}[ (\mathbf{X}^{\top} \mathbf{X})^{-1}\mathbf{X}^{T} \mathbf{y}]=(\mathbf{X}^{T} \mathbf{X})^{-1}\mathbf{X}^{T} \mathbb{E}[ \mathbf{y}],
+$$
+where we assume that $\mathbf{X}$ is non stochastic. Using equation (\ref{eq:expectation_yi}) on vector form we get
+
+\begin{equation}\label{eq:expectation_beta}
+\mathbb{E}(\boldsymbol{\hat{\beta}}) = (\mathbf{X}^{T} \mathbf{X})^{-1} \mathbf{X}^{T}\mathbf{X}\boldsymbol{\beta}=\boldsymbol{\beta}.
+\end{equation}
+
+
+
+OKAY!!!! OKAY!!!! OKAY!!!!
+
+
+\begin{align*}
+\mbox{Var}(\boldsymbol{\hat{\beta}}) 
+&= \mathbb{E} \{ [\boldsymbol{\beta} - \mathbb{E}(\boldsymbol{\beta})] [\boldsymbol{\beta} - \mathbb{E}(\boldsymbol{\beta})]^{T} \}
+\\
+&= \mathbb{E}[(\hat\beta - \mathbb{E}[\boldsymbol\beta])^2 ]
+\\
+&= \mathbb{E} \{ [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y} - \boldsymbol{\beta}] \, [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y} - \boldsymbol{\beta}]^{T} \}
+\\
+&=  \mathbb{E} \{ [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y}] \, [(\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y}]^{T} \} - \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}
+\\
+&=  \mathbb{E} \{ (\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \mathbf{y} \, \mathbf{y}^{T} \, \mathbf{X} \, (\mathbf{X}^{T} \mathbf{X})^{-1}  \} - \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}
+\\
+&= (\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \, \mathbb{E} \{ \mathbf{y} \, \mathbf{y}^{T} \} \, \mathbf{X} \, (\mathbf{X}^{T} \mathbf{X})^{-1} - \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}
+\\
+&= (\mathbf{X}^{T} \mathbf{X})^{-1} \, \mathbf{X}^{T} \, \{ \mathbf{X} \, \boldsymbol{\beta} \, \boldsymbol{\beta}^{T} \,  \mathbf{X}^{T} + \sigma^2 \} \, \mathbf{X} \, (\mathbf{X}^{T} \mathbf{X})^{-1} - \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}
+\\
+&= (\mathbf{X}^T \mathbf{X})^{-1} \, \mathbf{X}^T \, \mathbf{X} \, \boldsymbol{\beta} \, \boldsymbol{\beta}^T \,  \mathbf{X}^T \, \mathbf{X} \, (\mathbf{X}^T  \mathbf{X})^{-1} +  \, \, \sigma^2 \, (\mathbf{X}^T \mathbf{X})^{-1} \, \mathbf{X}^T  \, \mathbf{X} \, (\mathbf{X}^T \mathbf{X})^{-1} - \boldsymbol{\beta} \boldsymbol{\beta}^T
+\\
+&= \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}  + \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1} - \boldsymbol{\beta} \, \boldsymbol{\beta}^{T}
+ =  \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1},
+\end{align*}
+
+
+
+
+
+
+
+!!!!! !!!! IKKE FERDIG !!!!! !!!!!
