@@ -72,7 +72,7 @@ $$
 Rewriting this we get that
 
 \begin{equation}\label{eq:beta_OLS}
-    \hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+    \hat{\boldsymbol\beta}_{OLS}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
 \end{equation}
 is the optimal parameter if the Hessian matrix $\mathbf{H}=(\mathbf{X}^T\mathbf{X})$ is invertible. This has expectation value 
 \begin{equation}\label{eq:expectation_beta}
@@ -85,12 +85,8 @@ and variance
 The calculations for this can be found in appendix \ref{app:ols_expactation_variance}.
 
 
-\subsubsection{Ridge NOT DONE}
-???? Ride regression is a solution to the imprecision of least square estimators when linear regression models have highly correlated independent variables.  ?????
-
-
-
-We can re-write the optimisation problem
+\subsubsection{Ridge}
+The ordinary least squares method can be inaccurate when the model have highly correlated independent variables. Ridge regression tries to solve this by adding a regularization parameter $\lambda$, called a hyperparameter, to the optimization problem. We start by re-writing the optimization problem as 
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
 {\mathbb{R}}^{p}}}\frac{1}{n}\sum_{i=0}^{n-1}\left(y_i-\tilde{y}_i\right)^2=\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2,
@@ -99,31 +95,23 @@ where we have used the definition of  a norm-2 vector, that is
 $$
 \vert\vert \boldsymbol{x}\vert\vert_2 = \sqrt{\sum_i x_i^2}.
 $$
-By minimizing the above equation with respect to the parameters
-$\boldsymbol{\beta}$ we could then obtain an analytical expression for the
-parameters $\boldsymbol{\beta}$.  We can add a regularization parameter $\lambda$ by
-defining a new cost function to be optimized, that is
+By adding the regularization parameter $\lambda$ we get that
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
-{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_2^2
+{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_2^2,
 $$
-
-
-
-
-
-Regularization parameter $\lambda$
-
-
+where we
+require that $\vert\vert \boldsymbol{\beta}\vert\vert_2^2\le t$, where $t$ is
+a finite number larger than zero. We define the cost function to be optimized, that is
 $$
 C(\boldsymbol{X},\boldsymbol{\beta})=\left\{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})\right\}+\lambda\boldsymbol{\beta}^T\boldsymbol{\beta},
 $$
+Minimizing the above equation in the same way as we did OLS gives the optimal parameter
+\begin{equation}\label{eq:beta_ridge}
+\hat{\boldsymbol{\beta}}_{\mathrm{Ridge}} = \left(\boldsymbol{X}^T\boldsymbol{X}+\lambda\boldsymbol{I}\right)^{-1}\boldsymbol{X}^T\boldsymbol{y}.
+\end{equation}
+This means that the Ridge estimator scales the OLS estimator by the inverse of a factor $(1+\lambda)$.
 
-DERIVATIVE
-
-$$
-\hat{\boldsymbol{\beta}}_{\mathrm{Ridge}} = \left(\boldsymbol{X}^T\boldsymbol{X}+\lambda\boldsymbol{I}\right)^{-1}\boldsymbol{X}^T\boldsymbol{y},
-$$
 
 
 
@@ -140,6 +128,10 @@ $$
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
 {\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1
+$$
+
+$$
+C(\boldsymbol{X},\boldsymbol{\beta})=\left\{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})\right\}+\lambda\vert\vert\boldsymbol{\beta}\vert\vert_1,
 $$
 
 
