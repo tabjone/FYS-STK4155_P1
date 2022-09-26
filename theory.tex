@@ -16,7 +16,7 @@ $$
 Giving that the dependent variable is
 
 $$
-y(x_i) = \tilde{y}_i + \varepsilon_i = \mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i.
+y(x_i) = \tilde{y}_i + \epsilon_i = \mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i.
 $$
 
 These $n$ equations can be written on matrix form as
@@ -24,24 +24,27 @@ These $n$ equations can be written on matrix form as
     \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 \end{equation}
 
-We get that the expectations value of this is
+When assuming that the noise $\epsilon$ is normally distributed around zero with a standard deviation of $\sigma$, we can calculate the expectation value
 
 \begin{equation}\label{eq:expectation_y}
 \mathbb{E}[\mathbf y] = \mathbf{X}\boldsymbol{\beta}
 \end{equation}
-and that the variance is
+and the variance
 
-OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!
 \begin{equation}\label{eq:variance_y}
-\mbox{Var}
+\mbox{Var}[ y_i] = \sigma^2.
 \end{equation}
-OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!OBS OBS!!!! HER SLUTTET DU PÅ TOG!!!!
+The calculations of these values can be found in appendix \ref{app:ols_expactation_variance}
 
 \subsubsection{Ordinary least squares}
 
-The method of ordinary least squares computes the unique line that minimises the sum of squared differences between the true data and that line. 
+The method of ordinary least squares computes the unique line that minimises the sum of squared differences between the true data and that line. In other words we have an optimisation problem on the from
+$$
+{\displaystyle \min_{\boldsymbol{\beta}\in
+{\mathbb{R}}^{p}}}\frac{1}{n}\sum_{i=0}^{n-1}\left(y_i-\tilde{y}_i\right)^2.
+$$
 
-We define the cost function for ordinary least squares as the mean squared error
+We define the cost function for ordinary least squares as
 
 $$
 C(\boldsymbol\beta) = \frac{1}{n}\sum_{i=0}^{n-1}(y_i-\tilde{y}_i)^2=\frac{1}{n}\left[(\mathbf{y}-\mathbf{\tilde y})^T(\mathbf{y}-\mathbf{\tilde y}) \right].
@@ -60,7 +63,7 @@ $$
 \frac{\partial \boldsymbol\beta}{\partial \beta_j} = 0.
 $$
 
-Doing this derivative we get that
+Doing this derivative gives
 
 $$
 \mathbf{X}^T (\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} )=0.
@@ -71,19 +74,82 @@ Rewriting this we get that
 \begin{equation}\label{eq:beta_OLS}
     \hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
 \end{equation}
-is the optimal parameter if the Hessian matrix $\mathbf{H}=(\mathbf{X}^T\mathbf{X})$ is invertible. 
+is the optimal parameter if the Hessian matrix $\mathbf{H}=(\mathbf{X}^T\mathbf{X})$ is invertible. This has expectation value 
+\begin{equation}\label{eq:expectation_beta}
+\mathbb{E}(\boldsymbol{\hat{\beta}}) =\boldsymbol{\beta}
+\end{equation}
+and variance
+\begin{equation}\label{eq:variance_beta}
+\mbox{Var}(\boldsymbol{\hat{\beta}})  = \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1}.
+\end{equation}
+The calculations for this can be found in appendix \ref{app:ols_expactation_variance}.
 
 
-In appendix \ref{app:ols_expactation_variance}.
+\subsubsection{Ridge NOT DONE}
+???? Ride regression is a solution to the imprecision of least square estimators when linear regression models have highly correlated independent variables.  ?????
 
-OG HER REFERER DU TIL APPENDIX OSV. STATE EXPECTATION VALUE OG VARIANCE FOR DE TO GREIENE!!!!
-!!!!
-!!!
-\subsubsection{Ridge}
 
-\subsubsection{Lasso}
 
-\subsection{Bias-Variance tradeoff}
+We can re-write the optimisation problem
+$$
+{\displaystyle \min_{\boldsymbol{\beta}\in
+{\mathbb{R}}^{p}}}\frac{1}{n}\sum_{i=0}^{n-1}\left(y_i-\tilde{y}_i\right)^2=\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2,
+$$
+where we have used the definition of  a norm-2 vector, that is
+$$
+\vert\vert \boldsymbol{x}\vert\vert_2 = \sqrt{\sum_i x_i^2}.
+$$
+By minimizing the above equation with respect to the parameters
+$\boldsymbol{\beta}$ we could then obtain an analytical expression for the
+parameters $\boldsymbol{\beta}$.  We can add a regularization parameter $\lambda$ by
+defining a new cost function to be optimized, that is
+$$
+{\displaystyle \min_{\boldsymbol{\beta}\in
+{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_2^2
+$$
+
+
+
+
+
+Regularization parameter $\lambda$
+
+
+$$
+C(\boldsymbol{X},\boldsymbol{\beta})=\left\{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})\right\}+\lambda\boldsymbol{\beta}^T\boldsymbol{\beta},
+$$
+
+DERIVATIVE
+
+$$
+\hat{\boldsymbol{\beta}}_{\mathrm{Ridge}} = \left(\boldsymbol{X}^T\boldsymbol{X}+\lambda\boldsymbol{I}\right)^{-1}\boldsymbol{X}^T\boldsymbol{y},
+$$
+
+
+
+\subsubsection{Lasso NOT DONE}
+$$
+{\displaystyle \min_{\boldsymbol{\beta}\in
+{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1
+$$
+Here we have defined the norm-1 as
+$$
+\vert\vert \boldsymbol{x}\vert\vert_1 = \sum_i \vert x_i\vert.
+$$
+
+$$
+{\displaystyle \min_{\boldsymbol{\beta}\in
+{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1
+$$
+
+
+
+
+\subsection{Franke Function NOT DONE}
+THIS SHOULD MAYBE BE IN THE METHOD SECTION. Since this is more a way to generate a dataset than a theoretical function?
+
+
+\subsection{Bias-Variance tradeoff NOT DONE}
 I HAVE NOT STARTED WRITING HERE YET! JUST PLUGGED IN EQUATIONS!
 
 Assumption for this calculation: y=f(x)+epsilon. And f(x) is assumed to be a deterministic function. This makes $E[f]=f=E[y]$ (unbiased function)

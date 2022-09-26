@@ -3,7 +3,7 @@
 
 We use that the dependent variable
 $$
-y_i = y(x_i) = \tilde{y}_i + \varepsilon_i = \mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i,
+y_i = y(x_i) = \tilde{y}_i + \epsilon_i = \mathbf X_{i*}\boldsymbol{\beta} + \epsilon_i,
 $$
 
 to get the expectation value
@@ -61,13 +61,11 @@ $$
 $$
 where we assume that $\mathbf{X}$ is non stochastic. Using the expectation value from equation (\ref{eq:expectation_yi}) on vector form we get
 
-\begin{equation}\label{eq:expectation_beta}
+\begin{equation}\label{eq:expectation_beta_app}
 \mathbb{E}(\boldsymbol{\hat{\beta}}) = (\mathbf{X}^{T} \mathbf{X})^{-1} \mathbf{X}^{T}\mathbf{X}\boldsymbol{\beta}=\boldsymbol{\beta}.
 \end{equation}
 
 We then calculate the variance of the optimal parameter
-
-
 
 \begin{align*}
 \mbox{Var}(\boldsymbol{\hat{\beta}}) 
@@ -91,6 +89,6 @@ We then calculate the variance of the optimal parameter
  =  \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1},
 \end{align*}
 
-\begin{equation}\label{eq:var_beta}
+\begin{equation}\label{eq:var_beta_app}
 \mbox{Var}(\boldsymbol{\hat{\beta}})  = \sigma^2 \, (\mathbf{X}^{T} \mathbf{X})^{-1}.
 \end{equation}
