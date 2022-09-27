@@ -115,24 +115,33 @@ This means that the Ridge estimator scales the OLS estimator by the inverse of a
 
 
 
-\subsubsection{Lasso NOT DONE}
+\subsubsection{Lasso}
+For Lasso or least absolute shrinkage and selection operator we define the optimization problem
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
-{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1
+{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1,
 $$
-Here we have defined the norm-1 as
+with the norm-1 as
 $$
 \vert\vert \boldsymbol{x}\vert\vert_1 = \sum_i \vert x_i\vert.
 $$
-
+And this gives us the cost function 
 $$
-{\displaystyle \min_{\boldsymbol{\beta}\in
-{\mathbb{R}}^{p}}}\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2+\lambda\vert\vert \boldsymbol{\beta}\vert\vert_1
+C(\boldsymbol{X},\boldsymbol{\beta})=\left\{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})\right\}+\lambda\vert\vert\boldsymbol{\beta}\vert\vert_1.
 $$
-
+Taking the derivative with respect to $\boldsymbol{\beta}$ and recalling that the derivative of the absolute value is (we drop the boldfaced vector symbol for simplicty)
 $$
-C(\boldsymbol{X},\boldsymbol{\beta})=\left\{(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})\right\}+\lambda\vert\vert\boldsymbol{\beta}\vert\vert_1,
+\frac{d \vert \beta\vert}{d \boldsymbol{\beta}}=\mathrm{sgn}(\boldsymbol{\beta})=\left\{\begin{array}{cc} 1 & \beta > 0 \\-1 & \beta < 0, \end{array}\right.
 $$
+we have that the derivative of the cost function is
+$$
+\frac{\partial C(\boldsymbol{X},\boldsymbol{\beta})}{\partial \boldsymbol{\beta}}=-2\boldsymbol{X}^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta})+\lambda sgn(\boldsymbol{\beta})=0,
+$$
+and reordering we have
+$$
+\boldsymbol{X}^T\boldsymbol{X}\boldsymbol{\beta}+\lambda sgn(\boldsymbol{\beta})=2\boldsymbol{X}^T\boldsymbol{y}.
+$$
+This equation does not lead to a nice analytical equation as in either Ridge regression or ordinary least squares. This equation can however be solved by using standard convex optimization algorithms using for example the Python package CV\slash XOPT.
 
 
 
@@ -140,6 +149,10 @@ $$
 \subsection{Franke Function NOT DONE}
 THIS SHOULD MAYBE BE IN THE METHOD SECTION. Since this is more a way to generate a dataset than a theoretical function?
 
+\subsection{Resampling methods NOT DONE}
+men dette har litt med bias varias tradeoff å gjøre?
+\subsubsection{Bootstrap}
+\subsubsection{Cross-validation}
 
 \subsection{Bias-Variance tradeoff NOT DONE}
 I HAVE NOT STARTED WRITING HERE YET! JUST PLUGGED IN EQUATIONS!
