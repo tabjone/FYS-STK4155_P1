@@ -147,7 +147,13 @@ This equation does not lead to a nice analytical equation as in either Ridge reg
 
 
 \subsection{Resampling methods and Bias-Variance Tradeoff}
+There are two error sources in machine learning that are of importance, the bias and the variance. 
+
+
 %NOT STARTED HERE YET
+Core idea: We can resample datasets with IID as many times as we have datapoints. This will decrease the variance. 
+
+What we want: Low variance, low bias. 
 
 Assumption for this calculation: y=f(x)+epsilon. And f(x) is assumed to be a deterministic function. This makes $E[f]=f=E[y]$ (unbiased function)
 
