@@ -1,9 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Depending on what type of methods we use, may not need to have subsubsection.
-
 \section{Theory}
 \subsection{Linear regression}
+%Half and half copied / self written
 In machine learning we call the independent variable $\mathbf{x}$ a feature and the dependent variable $\mathbf{y}$ a response. A regression model aims at finding a likelihood function $p(\mathbf{y}|\mathbf{x})$, that is the conditional distribution for $\mathbf{y}$ with a given $\mathbf{x}$. The estimation of $p(\mathbf{y}|\mathbf{x})$ is made using a data set with $n$ cases $i=0,1,2,...,n-1$ of a response variable $y_i$ and a set of predictor variables $\mathbf{x}_i=[x_{i0}, x_{i1},...,x_{ip-1}]$. The set of these vectors $\mathbf{X}=[\mathbf{x}_{0}\ \mathbf{x}_{1}\ ...\ \mathbf{x}_{n-1}]$ is called the design matrix of the model. 
 
 
@@ -37,7 +36,7 @@ and the variance
 The calculations of these values can be found in appendix \ref{app:ols_expactation_variance}
 
 \subsubsection{Ordinary least squares}
-
+%%FIrst sentence here is from wikipedia
 The method of ordinary least squares computes the unique line that minimises the sum of squared differences between the true data and that line. In other words we have an optimisation problem on the from
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
@@ -87,6 +86,7 @@ The calculations for this can be found in appendix \ref{app:ols_expactation_vari
 
 \subsubsection{Ridge}
 The ordinary least squares method can be inaccurate when the model have highly correlated independent variables. Ridge regression tries to solve this by adding a regularization parameter $\lambda$, called a hyperparameter, to the optimization problem. We start by re-writing the optimization problem as 
+%%FROM HERE IS COPIED ALMOST ENIRELY FROM NOTES
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
 {\mathbb{R}}^{p}}}\frac{1}{n}\sum_{i=0}^{n-1}\left(y_i-\tilde{y}_i\right)^2=\frac{1}{n}\vert\vert \boldsymbol{y}-\boldsymbol{X}\boldsymbol{\beta}\vert\vert_2^2,
@@ -113,9 +113,8 @@ Minimizing the above equation in the same way as we did OLS gives the optimal pa
 This means that the Ridge estimator scales the OLS estimator by the inverse of a factor $(1+\lambda)$.
 
 
-
-
 \subsubsection{Lasso}
+%% THIS ENTIRE THING IS COPIED FROM THE LECTURE NOTES
 For Lasso or least absolute shrinkage and selection operator we define the optimization problem
 $$
 {\displaystyle \min_{\boldsymbol{\beta}\in
@@ -146,16 +145,9 @@ This equation does not lead to a nice analytical equation as in either Ridge reg
 
 
 
-\subsection{Franke Function NOT DONE}
-THIS SHOULD MAYBE BE IN THE METHOD SECTION. Since this is more a way to generate a dataset than a theoretical function?
 
-\subsection{Resampling methods NOT DONE}
-men dette har litt med bias varias tradeoff å gjøre?
-\subsubsection{Bootstrap}
-\subsubsection{Cross-validation}
-
-\subsection{Bias-Variance tradeoff NOT DONE}
-I HAVE NOT STARTED WRITING HERE YET! JUST PLUGGED IN EQUATIONS!
+\subsection{Resampling methods and Bias-Variance Tradeoff}
+%NOT STARTED HERE YET
 
 Assumption for this calculation: y=f(x)+epsilon. And f(x) is assumed to be a deterministic function. This makes $E[f]=f=E[y]$ (unbiased function)
 
@@ -176,4 +168,12 @@ $$
 $$
 \mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\left(\mbox{Bias}\left[{\tilde y}\right] \right)^2 + \mbox{Var}\left[{\tilde f} \right] + \sigma^2
 $$
+
+
+
+
+\subsubsection{Bootstrap}
+Assumtion: IID.
+
+\subsubsection{Cross-validation}
 
