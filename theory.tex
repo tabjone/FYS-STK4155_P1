@@ -188,16 +188,144 @@ and by adding and subtracting $\mathbb{E}\left[\mathbf{\tilde{y}}\right]$ in the
 %\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\mathbb{E}\left[(\mathbf{y}-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right]+\mathrm{Var}\left[\mathbf{\tilde{f}}\right]+\sigma^2,
 %$$
 
+%In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap. %Both methods are important tools in the practical application of many statistical learning procedures. 
+%For example, cross-validation can be used to estimate the test error associated with a given statistical learning method %in order to evaluate its performance, or to select the appropriate level of flexibility. The process of evaluating a model’s %performance is known as model assessment, whereas the process of selecting the proper level of flexibility for a model %is known as model selection. The bootstrap is widely used.
+
 \subsubsection{Bootstrap NOT DONE}
-%lecture notes
-Resampling approaches can be computationally expensive, because they involve fitting the same statistical method multiple times using different subsets of the training data. However, due to recent advances in computing power, the computational requirements of resampling methods generally are not prohibitive. In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap. Both methods are important tools in the practical application of many statistical learning procedures. For example, cross-validation can be used to estimate the test error associated with a given statistical learning method in order to evaluate its performance, or to select the appropriate level of flexibility. The process of evaluating a model’s performance is known as model assessment, whereas the process of selecting the proper level of flexibility for a model is known as model selection. The bootstrap is widely used.
-%lecture notes
-Bootstrapping is a non-parametric approach to statistical inference that substitutes computation for more traditional distributional assumptions and asymptotic results. Bootstrapping offers a number of advantages:
--The bootstrap is quite general, although there are some cases in which it fails.
--Because it does not require distributional assumptions (such as normally distributed errors), the bootstrap can provide more accurate inferences when the data are not well behaved or when the sample size is small.
--It is possible to apply the bootstrap to statistics with sampling distributions that are difficult to derive, even asymptotically.
--It is relatively simple to apply the bootstrap to complex data-collection plans (such as stratified and clustered samples).
+The advantage of bootstrapping is that i's very general, as it does not require distributional assumptions. This makes bootstrap more accurate when data is not well behaved or the sample size is small. 
+
+%closely resembles lecture notes, and WILL REWRITE the beginning here ASAP to make coherent and understandable.
+Since $\boldsymbol{\hat{\beta}}=\boldsymbol{\hat\beta}(\boldsymbol{X})$ is a function of random variables, $\boldsymbol{\hat\beta}$ itself must be a random variable. Thus it has
+a pdf $p(\boldsymbol{t})$. The aim of the bootstrap is to
+estimate $p(\boldsymbol{t})$ by the relative frequency of
+$\boldsymbol{\hat\beta}$. If the relative frequency closely
+resembles $p(\boldsymbol{t})$, then using numerics, it is straight forward to
+estimate all the interesting parameters of $p(\boldsymbol{t})$ using point
+estimators. If we draw observations in accordance with
+the relative frequency of the observations, we can replace $p(x)$ by the relative frequency of the observation $X_i$. And in the case that $\boldsymbol{\hat\beta}$ has
+more than one component, and the components are independent, we use the
+same estimator on each component separately. The steps of the independent bootstrap is:
+
+\begin{mdframed}[backgroundcolor=black!10]
+\raggedright
+1. Draw with replacement $n$ numbers for the observed variables $\boldsymbol{x} = (x_1,x_2,\cdots,x_n)$. \\
+2. Define a vector $\boldsymbol{x}^*$ containing the values which were drawn from $\boldsymbol{x}$. \\
+3. Using the vector $\boldsymbol{x}^*$ compute $\boldsymbol{\hat\beta}^*$ by evaluating $\boldsymbol{\hat\beta}$ under the observations $\boldsymbol{x}^*$. \\
+4. Repeat this process $k$ times. 
+\end{mdframed}
+The histogram of the relative frequency of $\boldsymbol{\hat\beta}^*$ is then the estimate of the probability distribution $p(t)$.
+
+
+%LECTURE NOTES, NOT LOOKED AT THIS YET ALMOST
+When you are done, you can draw a histogram of the relative frequency
+of $\widehat \beta^*$. This is your estimate of the probability
+distribution $p(t)$. Using this probability distribution you can
+estimate any statistics thereof. In principle you never draw the
+histogram of the relative frequency of $\widehat{\beta}^*$. Instead
+you use the estimators corresponding to the statistic of interest. For
+example, if you are interested in estimating the variance of $\widehat
+\beta$, apply the etsimator $\widehat \sigma^2$ to the values
+$\widehat \beta^*$.
 
 
 \subsubsection{Cross-validation NOT DONE}
+%close to lecture notes
+The advantage of cross-validation is that the data splitting is not done randomly so we don't get any unwanted influnece on the model building or prediction evaluation. This is called a  $k$-fold cross-validation structures the data splitting involves dividing the samples $k$ more or less equally sized exhaustive and
+mutually exclusive subsets. In turn (at each split) one of these
+subsets plays the role of the test set while the union of the
+remaining subsets constitutes the training set. Such a splitting
+warrants a balanced representation of each sample in both training and
+test set over the splits. The steps of cross-validation for the various values of $k$ is:
+
+\begin{mdframed}[backgroundcolor=black!10]
+\raggedright
+
+1. Shuffle the dataset randomly.\\
+
+2. Split the dataset into $k$ groups.\\
+
+3. For each unique group:\\
+
+\hspace{1cm}a. Decide which group to use as a set for test data\\
+
+\hspace{1cm}b. Take the remaining groups as a set for training data\\
+
+\hspace{1cm}c. Fit a model on the training set and evaluate it on the test set\\
+
+\hspace{1cm}d. Retain the evaluation score and discard the model\\
+
+5. Summarize the model using the sample of model evaluation scores\\
+
+\end{mdframed}
+
+
+%%ALL AFTER THIS IS JUNK THAT MAY BE INCLUDED
+
+%
+When the repetitive splitting of the data set is done randomly,
+samples may accidently end up in a fast majority of the splits in
+either training or test set. Such samples may have an unbalanced
+influence on either model building or prediction evaluation. To avoid
+this $k$-fold cross-validation structures the data splitting. The
+samples are divided into $k$ more or less equally sized exhaustive and
+mutually exclusive subsets. In turn (at each split) one of these
+subsets plays the role of the test set while the union of the
+remaining subsets constitutes the training set. Such a splitting
+warrants a balanced representation of each sample in both training and
+test set over the splits. Still the division into the $k$ subsets
+involves a degree of randomness. This may be fully excluded when
+choosing $k=n$. This particular case is referred to as leave-one-out
+cross-validation (LOOCV).
+%
+How to set up the cross-validation for Ridge and/or Lasso
+
+* Define a range of interest for the penalty parameter.
+
+* Divide the data set into training and test set comprising samples $\{1, \ldots, n\} \setminus i$ and $\{ i \}$, respectively.
+
+* Fit the linear regression model by means of ridge estimation  for each $\lambda$ in the grid using the training set, and the corresponding estimate of the error variance $\boldsymbol{\sigma}_{-i}^2(\lambda)$, as
+
+\begin{align*}
+\boldsymbol{\beta}_{-i}(\lambda) & =  ( \boldsymbol{X}_{-i, \ast}^{T}
+\boldsymbol{X}_{-i, \ast} + \lambda \boldsymbol{I}_{pp})^{-1}
+\boldsymbol{X}_{-i, \ast}^{T} \boldsymbol{y}_{-i}
+\end{align*}
+
+* Evaluate the prediction performance of these models on the test set by $[y_i, \boldsymbol{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]$. Or, by the prediction error $|y_i - \boldsymbol{X}_{i, \ast} \boldsymbol{\beta}_{-i}(\lambda)|$, the relative error, the error squared or the R2 score function.
+
+* Repeat the first three steps  such that each sample plays the role of the test set once.
+
+* Average the prediction performances of the test sets at each grid point of the penalty bias/parameter. It is an estimate of the prediction performance of the model corresponding to this value of the penalty parameter on novel data. It is defined as
+
+\begin{align*}
+\frac{1}{n} \sum_{i = 1}^n \log\{L[y_i, \mathbf{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]\}.
+\end{align*}
+
+%
+
+Cross-validation in brief
+
+For the various values of $k$
+
+\begin{mdframed}[backgroundcolor=black!10]
+\raggedright
+
+1. Shuffle the dataset randomly.\\
+
+2. Split the dataset into $k$ groups.\\
+
+3. For each unique group:\\
+
+\hspace{1cm}a. Decide which group to use as a set for test data\\
+
+\hspace{1cm}b. Take the remaining groups as a set for training data\\
+
+\hspace{1cm}c. Fit a model on the training set and evaluate it on the test set\\
+
+\hspace{1cm}d. Retain the evaluation score and discard the model\\
+
+5. Summarize the model using the sample of model evaluation scores\\
+
+\end{mdframed}
+
 
