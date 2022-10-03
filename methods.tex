@@ -1,18 +1,86 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Method}
+%%MOST IMPORTANT FOR METHOD: Put in exact parameters used to produce plots so that a reader can reproduce it. %%
 
-%Maybe something about how we implement bias-variance tradeoff
+%%On how we implemented: psudo-code and algos
 %Maybe section about using SVD for inverting matrix, or maybe section on SVD in theory
 
+%scaling of data. Why we did or didn't scale. Critical discussion of this.
+
+\subsection{Datasets}
+\subsubsection{Franke Function}
+%What is it
+%How did we implement it
+%Why did we implement it
+%Any testing to know its working correctly? (I think not needed)
+\subsubsection{Terrain data}
+%How did we implement it
+%Where did we find this
+%Why do we use it
+
+\subsection{Error estimation}
+%%Mean squared error
+%What is it
+%Why do we use it
+
+%%R^2
+%What is it
+%Why do we use it
+
+\subsection{Linear regression}
+%%OLS
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+
+%%Ridge
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+
+%%Lasso
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+
+\subsection{Resampling}
+%%Bootstrap
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+
+%%Cross-validation
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
 
 
 
-%%Describe the methods and algorithms. 
-%Section about Franke-Function, why we use it and how we use it
-%Section about terrain data, why and how
 
-%psudocode on implemntation and algorithms
+%THIS IF FROM THE LECTURE NOTES. BUT ABIT EXTENSIVE. MIGHT NOT NEED IT
+\begin{comment}
+How to set up the cross-validation for Ridge and/or Lasso
 
-%%Error estimation, code testing ect
-%Section about error estimation, R^2 and MSE
-%if some benchmarking thing put here, so that reader can verify results. Extremely important that parameters are included in report.
+* Define a range of interest for the penalty parameter.
+
+* Divide the data set into training and test set comprising samples $\{1, \ldots, n\} \setminus i$ and $\{ i \}$, respectively.
+
+* Fit the linear regression model by means of ridge estimation  for each $\lambda$ in the grid using the training set, and the corresponding estimate of the error variance $\boldsymbol{\sigma}_{-i}^2(\lambda)$, as
+
+\begin{align*}
+\boldsymbol{\beta}_{-i}(\lambda) & =  ( \boldsymbol{X}_{-i, \ast}^{T}
+\boldsymbol{X}_{-i, \ast} + \lambda \boldsymbol{I}_{pp})^{-1}
+\boldsymbol{X}_{-i, \ast}^{T} \boldsymbol{y}_{-i}
+\end{align*}
+
+* Evaluate the prediction performance of these models on the test set by $[y_i, \boldsymbol{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]$. Or, by the prediction error $|y_i - \boldsymbol{X}_{i, \ast} \boldsymbol{\beta}_{-i}(\lambda)|$, the relative error, the error squared or the R2 score function.
+
+* Repeat the first three steps  such that each sample plays the role of the test set once.
+
+* Average the prediction performances of the test sets at each grid point of the penalty bias/parameter. It is an estimate of the prediction performance of the model corresponding to this value of the penalty parameter on novel data. It is defined as
+
+\begin{align*}
+\frac{1}{n} \sum_{i = 1}^n \log\{L[y_i, \mathbf{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]\}.
+\end{align*}
+\end{comment}
+
