@@ -142,11 +142,6 @@ $$
 $$
 This equation does not lead to a nice analytical equation as in either Ridge regression or ordinary least squares. This equation can however be solved by using standard convex optimization algorithms using for example the Python package CV\slash XOPT.
 
-
-\subsection{Vandermonde design matrix NOT DONE}
-%
-
-
 \subsection{Resampling methods and Bias-Variance Tradeoff}
 When working with a dataset of independent and identically distributed events, called IIDs, we can draw repeated samples from the training set and refit the model on each sample. For each model refitting we can obtain additional information that would not be attainable by only fitting the model once. This will be more computationally expensive as we need to fit the same model over and over again. Let's call the number of fits for $m$. Then we use the central limit theorem to get the approximation of the standard deviation
 \begin{equation}\label{eq:central_limit_deviation}
