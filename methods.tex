@@ -2,17 +2,48 @@
 \section{Method}
 %%MOST IMPORTANT FOR METHOD: Put in exact parameters used to produce plots so that a reader can reproduce it. %%
 
-%%On how we implemented: psudo-code and algos
+%%On how we implemented: pseudo-code and altos
 %Maybe section about using SVD for inverting matrix, or maybe section on SVD in theory
 
 %scaling of data. Why we did or didn't scale. Critical discussion of this.
 
 \subsection{Datasets}
+Our data was generated from a random uniform distribution in the interval [0,
+1]. Two arrays was generated at random, with each containing n=20 data points. 
+These arrays, x and y was combined in two mesh grids, X and Y each of size n x n. Thus, our
+total dataset consisted of 400 data points. 
+
 \subsubsection{Franke Function}
 %What is it
 %How did we implement it
 %Why did we implement it
 %Any testing to know its working correctly? (I think not needed)
+
+The Franke Function was used to test and validate and test our models. 
+
+The Franke function is a waited sum of four exponentials and takes two
+arguments as input: 
+\begin{align*}
+    \label{eq:franke_function} 
+    f(x,y) &= \frac{3}{4}exp\left(-\frac{(9x-2)^2}{4}-\frac{(9y-2)^2}{4} \right)
+    + \frac{3}{4}exp\left(-\frac{(9x+1)^2}{49}-\frac{(9y+1)}{10} \right) \\
+           &+ \frac{1}{2}exp\left(-\frac{(9x-7)^2}{4}-\frac{(9y-3)^2}{4}
+           \right)-\frac{1}{5}exp(-(9x-4)^2-(9y-7)^2)
+\end{align*}
+This function is widely used for testing of different fitting algorithms. 
+Before we applied our fitting algorithms on the terrain data, we used this function
+to test and validate that our own developed algorithms worked properly.    
+
+Random normal distributed noise with an amplitude of 0.2, zero mean and a
+standard deviation of 1 was added to the data generated from the Franke
+function. Our data was split in train and test data, with $20\%$ preserved for
+testing purposes. Sklearn's trian\_test\_split function was used for splitting
+of the data. In order to keep the dataset consistent between different runs, a
+random seed generator was used. Our training data was fitted to polynomials up
+to degree 12 in x and y. 
+
+
+
 \subsubsection{Terrain data}
 %How did we implement it
 %Where did we find this
