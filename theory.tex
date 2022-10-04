@@ -142,12 +142,7 @@ $$
 $$
 This equation does not lead to a nice analytical equation as in either Ridge regression or ordinary least squares. This equation can however be solved by using standard convex optimization algorithms using for example the Python package CV\slash XOPT.
 
-
-\subsection{Vandermonde design matrix NOT DONE}
-%
-
-
-\subsection{Resampling methods and Bias-Variance Tradeoff NOT DONE}
+\subsection{Resampling methods and Bias-Variance Tradeoff}
 When working with a dataset of independent and identically distributed events, called IIDs, we can draw repeated samples from the training set and refit the model on each sample. For each model refitting we can obtain additional information that would not be attainable by only fitting the model once. This will be more computationally expensive as we need to fit the same model over and over again. Let's call the number of fits for $m$. Then we use the central limit theorem to get the approximation of the standard deviation
 \begin{equation}\label{eq:central_limit_deviation}
 \sigma_m\approx
@@ -166,28 +161,39 @@ $$
 $$
 and by adding and subtracting $\mathbb{E}\left[\mathbf{\tilde{y}}\right]$ in the parenthesis on the right side, we get
 
-%THIS CALCULATION IS NOT FINISHED. I tried but for some reason I get some terms extra to this that is probably zero, but I can't show it.
 \begin{align*}
 \mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]
 &=\mathbb{E}\left[(\mathbf{f}+\mathbf{\epsilon}-\mathbf{\tilde{y}}+\mathbb{E}\left[\mathbf{\tilde{y}}\right]-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right]
 \\
-&= ... ... !!! ... ... !!! !!! !!! ...
+&= \mathbb{E}\left[(\mathbf{f}-\mathbb{E}[\mathbf{\tilde y}])^2 \right] + \mathbb{E}\left[(\mathbf{\tilde y}-\mathbb{E}[\mathbf{\tilde{y}}])^2\right] + \mathbb{E}[\epsilon^2] + 2(f-\mathbb{E}[\mathbf{\tilde y}])\mathbb{E}[\epsilon]
 \\
-&= ... ... !!! ... ... !!! !!! !!! ...
+&+2\mathbb{E}[\epsilon]\mathbb{E}\left[\mathbb{E}[\mathbf{\tilde y}]-\mathbf{\tilde y} \right] + 2\mathbb{E}\left[\mathbb{E}[\mathbf{\tilde y}] -\mathbf{\tilde y} \right](f - \mathbb{E}[\mathbf{\tilde y}])
 \\
-&= ... ... !!! ... ... !!! !!! !!! ...
+&=\mathbb{E}\left[(\mathbf{f}-\mathbb{E}[\mathbf{\tilde y}])^2 \right]  + \mathbb{E}\left[(\mathbf{\tilde y}-\mathbb{E}[\mathbf{\tilde{y}}])^2\right]+ \mathbb{E}[\epsilon^2] + 2\mathbb{E}\left[\mathbb{E}[\mathbf{\tilde y}] -\mathbf{\tilde y} \right](f - \mathbb{E}[\mathbf{\tilde y}])
 \\
-&=\left(\mbox{Bias}\left[{\tilde y}\right] \right)^2 + \mbox{Var}\left[{\tilde f} \right] + \sigma^2
+&= \mathbb{E}\left[(\mathbf{f}-\mathbb{E}[\mathbf{\tilde y}])^2 \right]  +\mathbb{E}\left[(\mathbf{\tilde y}-\mathbb{E}[\mathbf{\tilde{y}}])^2\right] + \mathbb{E}[\epsilon^2]
+\\
+&=\left(\mbox{Bias}\left[{\tilde y}\right] \right)^2 + \mbox{Var}\left[{\tilde f} \right] + \sigma^2,
 \end{align*}
+
+where we used that $\mathbb{E}\left[\mathbb{E}[\mathbf{\tilde y}]\right]=\mathbb{E}[\mathbf{\tilde y}]$, 
+
+\begin{equation}\label{eq:bias_ytilde}
+(\mathrm{Bias}[\tilde{y}])^2=\left(\boldsymbol{y}-\mathbb{E}\left[\boldsymbol{\tilde{y}}\right]\right)^2
+\end{equation}
+and
+\begin{equation}\label{eq:variance_ftilde}
+\mathrm{var}[\tilde{f}]=\mathbb{E}\left[(\mathbf{\tilde y}-\mathbb{E}[\mathbf{\tilde{y}}])^2\right].
+\end{equation}
+
+Since $\sigma^2$ is the variance of the dataset there is not much we can do about this. So what plays a role in the mean squared error is the bias and variance of the model. This means that to reduce the mean squared error we need to minimize these two parameters. 
+
+
 %From this equation it's obvious that we can't reduce $\sigma^2$ as this is from the noise in the dataset. 
 %From task
  %Explain what the terms mean and discuss their interpretations.
 
 
-
-%$$
-%\mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]=\mathbb{E}\left[(\mathbf{y}-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right]+\mathrm{Var}\left[\mathbf{\tilde{f}}\right]+\sigma^2,
-%$$
 
 %In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap. %Both methods are important tools in the practical application of many statistical learning procedures. 
 %For example, cross-validation can be used to estimate the test error associated with a given statistical learning method %in order to evaluate its performance, or to select the appropriate level of flexibility. The process of evaluating a model’s %performance is known as model assessment, whereas the process of selecting the proper level of flexibility for a model %is known as model selection. The bootstrap is widely used.

@@ -1,29 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+In supervised machine learning, linear regression is an indispensable tool. It is used to find linear relationships between variables. We call the predicting variables independent at the variables being predicted for dependent. An example of where this is used is in blood pressure medication, where we can give a patient various dosages of certain drugs and watch how their blood pressure responds. Then we can find what drugs has the the highest correlation with lowering the blood pressure. 
 
+We will look at three linear regression methods, called ordinary least squares (OLS), Least absolute shrinkage and selection operator (Lasso) and Ridge regression. The OLS method is fast and easy to implement but it can be inaccurate when we have highly correlated independent variables. The Ridge and Lasso method solves this by introducing a hyperparameter $\lambda$, which is used to regularize the model. Therefore depending on the data, all three models can be useful. The linear fitting will be done using the Vandermonde design matrix, which is a design matrix for a polynomial fit. Though there are many other ways to set up a design matrix.
 
-%Motivation
+The data used will be that of the Franke function, that is a function with two gaussian peaks and a dip, which is used for testing purposes, and terrain data taken from \href{https://earthexplorer.usgs.gov/}{https://earthexplorer.usgs.gov/}. 
 
-%Why are statistical methods like these important, what are they used for
-%What is OLS, ridge and lasso and why do we need it
-%What is resampling and why do we need it
+This will be split into a training set, which we train the model on, and a test set, on which we will do the model fitting. Then we evaluate the model with the mean squared error, which we want to be as low as possible. And the score function, which we want to be as high as possible. We can then use these values to compare the different regression models.
 
-%Overarching ideas
-%
-
-
-
-%Structure of report
-%We will start by looking at....
-%Then ...
-%This should be the same structure as theory, method and results are in
-% So the structure is OLS, Ridge, Lasso on the Franke function. Then bootstrap and cross-validation on the franke-function
-%Then the same on the real data
-%%For bootstrap and cross-validation the point is to look at the effect lambda parameter and reduction in MSE, variance.
-
-
-
-\begin{comment}
-%motivation for resampling, from lecture notes
-Resampling approaches can be computationally expensive, because they involve fitting the same statistical method multiple times using different subsets of the training data. However, due to recent advances in computing power, the computational requirements of resampling methods generally are not prohibitive. In this chapter, we discuss two of the most commonly used resampling methods, cross-validation and the bootstrap. Both methods are important tools in the practical application of many statistical learning procedures. For example, cross-validation can be used to estimate the test error associated with a given statistical learning method in order to evaluate its performance, or to select the appropriate level of flexibility. The process of evaluating a model’s performance is known as model assessment, whereas the process of selecting the proper level of flexibility for a model is known as model selection. The bootstrap is widely used.
-\end{comment}
+Then we look at two resampling methods called the bootstrap and cross-validation. These are methods to draw repeated samples of the data and refit a model on each sample. This gives additional information that would not be attained by only fitting the model once. This will reduce the variance of the model, but likely also increase the bias which can make us miss relevant relations between the dependent and independent variables. This leads to what is called the Bias-Variance tradeoff, which is the problem of minimizing both the bias and the variance. Also resampling methods can be quite computationally expensive as we will have to refit the model over and over again.
