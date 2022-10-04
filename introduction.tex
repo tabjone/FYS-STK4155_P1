@@ -4,6 +4,7 @@ In supervised machine learning, linear regression is an indispensable tool. It i
 
 We will look at three linear regression methods, called ordinary least squares (OLS), Least absolute shrinkage and selection operator (Lasso) and Ridge regression. The OLS method is fast and easy to implement but it can be inaccurate when we have highly correlated independent variables. The Ridge and Lasso method solves this by introducing a hyperparameter $\lambda$, which is used to regularize the model. Therefore depending on the data, all three models can be useful. The linear fitting will be done using the Vandermonde design matrix, which is a design matrix for a polynomial fit. Though there are many other ways to set up a design matrix.
 
+%Write something about what dataset terrain data thing used. Norsk data greie eller noe
 The data used will be that of the Franke function, that is a function with two gaussian peaks and a dip, which is used for testing purposes, and terrain data taken from \href{https://earthexplorer.usgs.gov/}{https://earthexplorer.usgs.gov/}. 
 
 This will be split into a training set, which we train the model on, and a test set, on which we will do the model fitting. Then we evaluate the model with the mean squared error, which we want to be as low as possible. And the score function, which we want to be as high as possible. We can then use these values to compare the different regression models.
