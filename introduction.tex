@@ -11,4 +11,6 @@ The data used will be that of the Franke function, that is a function with two g
 
 This will be split into a training set, which we train the model on, and a test set, on which we will do the model fitting. Then we evaluate the model with the mean squared error, which we want to be as low as possible. And the score function, which we want to be as high as possible. We can then use these values to compare the different regression models.
 
+%Also before this, mention overfitting? Here is a good place to mention beta parameter because we want plot beta as function of polynomial degree
+
 Then we look at two resampling methods called the bootstrap and cross-validation. These are methods to draw repeated samples of the data and refit a model on each sample. This gives additional information that would not be attained by only fitting the model once. This will reduce the variance of the model, but likely also increase the bias which can make us miss relevant relations between the dependent and independent variables. This leads to what is called the Bias-Variance tradeoff, which is the problem of minimizing both the bias and the variance. Also resampling methods can be quite computationally expensive as we will have to refit the model over and over again.
