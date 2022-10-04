@@ -2,7 +2,7 @@
 \section{Method}
 %%MOST IMPORTANT FOR METHOD (or results): Put in exact parameters used to produce plots so that a reader can reproduce it. %%
 
-%%On how we implemented: pseudo-code and altos
+%%On how we implemented: pseudo-code and algos
 %Maybe section about using SVD for inverting matrix, or maybe section on SVD in theory
 
 %scaling of data. Why we did or didn't scale. Critical discussion of this.
@@ -52,19 +52,23 @@ to degree 12 in x and y.
 %Why do we use it
 
 \subsection{Error estimation}
-%%Mean squared error
-%What is it
-%Why do we use it
-
-%%R^2
-%What is it
-%Why do we use it
+%Maybe something about implementation of this
+To assess the accuracy of our models we will use the mean squared error
+$$
+MSE(\boldsymbol{y},\tilde{\boldsymbol{y}}) = \frac{1}{n}
+\sum_{i=0}^{n-1}(y_i-\tilde{y}_i)^2,
+$$
+where n is the number of datapoints. This measures the difference between the model value and the actual value. And we will use the score function
+$$
+R^2(\boldsymbol{y}, \tilde{\boldsymbol{y}}) = 1 - \frac{\sum_{i=0}^{n - 1} (y_i - \tilde{y}_i)^2}{\sum_{i=0}^{n - 1} (y_i - \bar{y})^2},
+$$
+which is in essence just one minus the MSE in this case, but can be more advanced in other cases. We use this to give a score to the model.
 
 \subsection{Linear regression}
-
-%We used the Vandermonde design matrix for a linear regression polynomial fit. No point in having a theory section about this.
+%Something about how we implemented this. Maybe a bit more text here also
+For the design matrix we used what is called a Vandermonde design matrix
 \begin{center}
-$V=
+$\boldsymbol{X}=
 \begin{bmatrix} 
 1 & x_{0}&x_{0}^{2}&\dots &x_{0}^{p-1}
 \\1&x_{1}&x_{1}^{2}&\dots &x_{1}^{p-1}
