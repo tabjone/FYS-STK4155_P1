@@ -116,6 +116,51 @@ the hyper parameter, $\lambda = 0.001$
 
 % TODO: comparison of MSE for all methods
  
+ %Maybe split results into two parts, Franke and Terrain data
 
-$R^2$ and MSE plot of OLS, Ridge and lasso
+%According to red line in report we want:
+%On Franke-Function
+%Subplot of MSE and R^2, test and training data, for OLS
+%Subplot of MSE and R^2, test and training data, for Lasso
+%Subplot of MSE and R^2, test and training data, for Ridge
+%Comparrison of Regression methods
+%Beta plot, but how to do this nicely, to show how beta values get large when polynomial degree increases.
+%Resampling: bias-variance plot of bootstrap and cross-validation
+%Study lambda dependence (correlation plot)
+
+%On Terrain-data
+%Subplot of MSE and R^2, test and training data, for OLS
+%Subplot of MSE and R^2, test and training data, for Lasso
+%Subplot of MSE and R^2, test and training data, for Ridge
+%Comparrison of Regression methods
+%Resampling: bias-variance plot of bootstrap and cross-validation
+%Study lambda dependence (correlation plot)
+
+%For critical discussion of centering/scaling, from lecture notes: "If our predictors represent different scales, then it is important to standardize the design matrix  by subtracting the mean of each column from the corresponding column and dividing the column with its standard deviation."
+
+%Small test here
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/b_mse.png}
+         \caption{}
+         \label{fig:}
+     \end{subfigure}%
+     \hfill
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/b_r2.png}
+         \caption{}
+         \label{fig:}
+     \end{subfigure}
+        \caption{Mean squared error and score function for the Ordinary Least Squares (OLS) method. }
+        \label{fig:}
+\end{figure}
+
+
+
+
+
 
