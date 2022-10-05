@@ -11,7 +11,8 @@
 Our data was generated from a random uniform distribution in the interval [0,
 1]. Two arrays was generated at random, with each containing n=20 data points. 
 These arrays, x and y was combined in two mesh grids, X and Y each of size n x n. Thus, our
-total dataset consisted of 400 data points. 
+total dataset consisted of 400 data points. Before any fitting was done on the
+data the mesh rids was reshaped into one dimensional arrays.  
 
 \subsubsection{Franke Function}
 %What is it
@@ -19,8 +20,7 @@ total dataset consisted of 400 data points.
 %Why did we implement it
 %Any testing to know its working correctly? (I think not needed)
 
-The Franke Function was used to test and validate and test our models. 
-
+The Franke Function was used to test and validate our models. 
 The Franke function is a waited sum of four exponentials and takes two
 arguments as input: 
 \begin{align*}
@@ -39,55 +39,102 @@ standard deviation of 1 was added to the data generated from the Franke
 function. Our data was split in train and test data, with $20\%$ preserved for
 testing purposes. Sklearn's trian\_test\_split function was used for splitting
 of the data. In order to keep the dataset consistent between different runs, a
-random seed generator was used. Our training data was fitted to polynomials up
-to degree 12 in x and y. 
+random seed generator was used. 
+
+\subsubsection{Desing matrix}
+
+Our training data was fitted to polynomials up
+to degree 12 in x and y. Thus, a design matrix of the form:
+\begin{equation*}
+    X = 
+    \begin{bmatrix}
+
+        1 & x_{0} & y_0 & x_{0}^{2} & x_0 y_0 & y^2 & \dots &y_{0}^{p} \\
+        1 & x_{1} & y_1 & x_{1}^{2} & x_1 y_1 & y^2 & \dots &y_{1}^{p} \\
+        1 & x_{2} & y_2 & x_{2}^{2} & x_2 y_2 & y^2 & \dots &y_{2}^{p} \\
+        \vdots &\vdots &\vdots &\vdots &\vdots & \vdots & \ddots & \vdots \\
+        1&x_{n-1} & y_{n-1} & x_{n-1}^2 & x_{n-1} y_{n-1} & y_{n-1}^2 & \dots &y_{n-1}^{p}, 
+    \end{bmatrix}
+\end{equation*}
+was used for OLS-, Ridge- and Lasso regression
+The following code snippet was used to generate our Design matrix: 
+\begin{lstlisting}[language=Python]
+for i in range(1,p+1):
+    q = int((i)*(i+1)/2)
+    for k in range(i+1):
+        X[:,q+k] = (x**(i-k))*(y**k)
+return X
+\end{lstlisting}
+, where p is the polynomial degree and X is the Deign matrix. 
+In order to reduce the number of computations, we generated one Design matrix
+with number of features corresponding to the maximum polynomial degree $p_{max}
+= 12$. This matrix has l features including the intercept given by the
+equation: 
+\begin{equation*}
+        l(p) = int(((p+1)*(p+2)/2))		
+\end{equation*}
+In order to fit the lower order polynomials this matrix was sliced in the
+following way:
+\begin{equation*}
+    X_{\text{train}}[:,l(p)] 
+\end{equation*}
+
+  
+% XXX: added y terms to matrix
+% XXX: Changed from poly p-1 to p
+% %We used the Vandermonde design matrix for a linear regression polynomial fit. No point in having a theory section about this.
+% \begin{center}
+% $V=
+% \begin{bmatrix} 
+% 1 & x_{0}&x_{0}^{2}&\dots &x_{0}^{p-1}
+% \\1&x_{1}&x_{1}^{2}&\dots &x_{1}^{p-1}
+% \\1&x_{2}&x_{2}^{2}&\dots &x_{2}^{p-1}
+% \\ \vdots &\vdots &\vdots &\ddots &\vdots \\
+% 1&x_{n-1}&ax_{n-1}^{2}&\dots &x_{n-1}^{p-1}
+% \end{matrix}
+% $
+% \end{center}
 
 
 
-\subsubsection{Terrain data}
-%How did we implement it
-%Where did we find this
-%Why do we use it
 
-\subsection{Error estimation}
-%%Mean squared error
-%What is it
-%Why do we use it
-
-%%R^2
-%What is it
-%Why do we use it
-
-\subsection{Linear regression}
-
-%We used the Vandermonde design matrix for a linear regression polynomial fit. No point in having a theory section about this.
-\begin{center}
-$V=
-\begin{bmatrix} 
-1 & x_{0}&x_{0}^{2}&\dots &x_{0}^{p-1}
-\\1&x_{1}&x_{1}^{2}&\dots &x_{1}^{p-1}
-\\1&x_{2}&x_{2}^{2}&\dots &x_{2}^{p-1}
-\\ \vdots &\vdots &\vdots &\ddots &\vdots \\
-1&x_{n-1}&ax_{n-1}^{2}&\dots &x_{n-1}^{p-1}
-\end{bmatrix}
-$
-\end{center}
-
-
+\subsection{Regression methods}
+Three different regression methods was applied to the Franke data and terrain
+data.  
+\subsubsection{OLS}
 %%OLS
 %How did we implement it
 %Why did we implement it
 %Did we do any testing
+The optimal values for beta with OLS regression $\hat{\bm{\beta}  }_{OLS}$ was
+calculated from equation
+\eqref{eq:beta_OLS}. The solution only exist when $(\bm{X}^T \bm{X})$ is
+invertible. To circumvent this problem we used numpy's pseudo inverse, to invert
+the matrix.
 
+Our own OLS method was compared with Sklearn's method
+(sklearn.linear\_model.LinearRegression). For the same training data, without
+any re-sampling. 
+
+\subsubsection{Ridge}
 %%Ridge
 %How did we implement it
 %Why did we implement it
 %Did we do any testing
+In the case of Ridge regression we introduced an array of regularization
+parameters $\lambda = [10^{-6}, 10^{-5}, \hdots, 10^{1}]$. The optimal values
+of beta with ridge regression $\hat{\bm{\beta } } _{Ridge} $ was calculated
+from equation \eqref{eq:beta_ridge}. 
 
+\subsubsection{Lasso}
 %%Lasso
 %How did we implement it
 %Why did we implement it
 %Did we do any testing
+The same regularization parameters as used for Ridge regression was used to find the
+optimal values for beta with Lasso regression, $\hat{\bm{\beta } } _{Lasso} $. We did not develop our
+own algorithm for Lasso regression. Insted we used the function provided by the
+sklearn python module.  
 
 \subsection{Resampling}
 %%Bootstrap
@@ -99,6 +146,45 @@ $
 %How did we implement it
 %Why did we implement it
 %Did we do any testing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Testing}
+\begin{table}
+    \centering
+    \caption{Determinant of $(X^T_{train}X_{train})$ with respect to polynomial
+    degree}  
+    \begin{tabular}{|c|c|}
+        \hline
+        Polynomial degree & $det(X_{train}^T X_{train})$  \\
+        \hline
+        1 & 208035.65\\
+        \hline
+        2 & 891473.68\\
+        \hline
+        3 & 99.34\\
+        \hline
+        4 & 7.91-10 \\
+        \hline
+        5 & 8.58-31 \\
+        \hline
+        6 & 1.92-64 \\
+        \hline
+        7 & 1.13-113 \\
+        \hline
+        8 & 5.28-181 \\
+        \hline
+        9 & 2.21-269 \\
+        \hline
+        10 & 0.0 \\
+        \hline
+        11 & -0.0 \\
+        \hline
+        12 & 0.0 \\
+        \hline
+         
+    \end{tabular} 
+\end{table}
 
 
 
@@ -130,3 +216,17 @@ How to set up the cross-validation for Ridge and/or Lasso
 \end{align*}
 \end{comment}
 
+
+\subsubsection{Terrain data}
+%How did we implement it
+%Where did we find this
+%Why do we use it
+
+\subsection{Error estimation}
+%%Mean squared error
+%What is it
+%Why do we use it
+
+%%R^2
+%What is it
+%Why do we use it
