@@ -51,6 +51,29 @@ to degree 12 in x and y.
 %Where did we find this
 %Why do we use it
 
+The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://image_link.com}{DIREKTE LINK TIL BILDET}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. 
+
+\begin{table}
+    \centering
+    \caption{Corner positions of Oslo radar topography data taken in the SRTM mission in the year 2000.}  
+    \label{tab:radar_data}
+    \begin{tabular}{|c|c|}
+    	\hline
+    	Corner & Position\\
+    	\hline
+    	NW & Lat 60\degree 00'00"N, Long 10\degree 00'00"E\\
+	\hline
+	NE & Lat 60\degree 00'00"N, Long 11\degree 00'00"E\\
+	\hline
+	SE & Lat 59\degree 00'00"N, Long 11\degree 00'00"E\\
+	\hline
+	SW & Lat 59\degree 00'00"N, Long 10\degree 00'00"E\\
+	\hline
+    \end{tabular} 
+\end{table}
+
+
+
 \subsection{Error estimation}
 %Maybe something about implementation of this
 To assess the accuracy of our models we will use the mean squared error
