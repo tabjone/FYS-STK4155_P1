@@ -128,6 +128,20 @@ for i in range(1,p+1):
         X[:,q+k] = (x**(i-k))*(y**k)
 return X
 \end{lstlisting}
+
+\begin{lstlisting}
+FUNCTION create_X(x, y, n)
+	X = array(length p+1, length n)
+	FOR i = 1 TO i = p
+		q = int((i)*(i+1)/2)
+		FOR k = 0 TO k = i
+			X[:,q+k] = (x**(i-k))*(y**k)
+		ENDFOR
+	ENDFOR
+return X
+ENDFUNCTION
+\end{lstlisting}
+
 , where p is the polynomial degree and X is the Deign matrix. 
 In order to reduce the number of computations, we generated one Design matrix
 with number of features corresponding to the maximum polynomial degree $p_{max}
