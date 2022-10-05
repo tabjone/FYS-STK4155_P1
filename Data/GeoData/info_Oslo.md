@@ -1,6 +1,6 @@
-https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/?fbclid=IwAR39FlBOnEG5OiuoMkR9EWXvnOFwfCBC8fzcHKNzB7ZexSAuUAh5KCaMDVA
+https://earthexplorer.usgs.gov/
 
-Image: SRTM1N59E010V3
+https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/?fbclid=IwAR39FlBOnEG5OiuoMkR9EWXvnOFwfCBC8fzcHKNzB7ZexSAuUAh5KCaMDVA
 
 Data Set Attribute	Attribute Value
 Entity ID	SRTM1N59E010V3
