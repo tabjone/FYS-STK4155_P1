@@ -14,21 +14,46 @@
 % * Your code has to include a scaling/centering:
 %   XXX: not included, data is already scaled in intervall [-1, 1]
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/b_mse.png}
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/b_mse.png}
+     \end{subfigure}%
+     \hfill
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/b_r2.png}
+     \end{subfigure}
+        \caption{Mean squared error and score function for the Ordinary Least Squares (OLS) method on the Franke function with N=????? for training and test data with a test/train split of 0.2}
+        \label{fig:mse_and_score_franke}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/b_r2.png}
-\end{figure}
+In figure \ref{fig:mse_and_score_franke} we see the mean squared error and score on the Franke function for a polynomial up to degree five. If our predictors represent different scales, then it is important to standardize the design matrix. And as the x and y data is on the same interval $[0, 1]$ we do not need to scale the data. We see from the figure that we get a big decrease in MSE and big increase in $R^2$ for a polynomial degree up to five. For degree five we do not see much change. 
+
+%\begin{figure}[H]
+%    \centering
+%    \caption{Mean square error as function of polynomial degree for }
+%    \label{fig:ols_franke}
+%    \includegraphics[width=0.8\textwidth]{Figures/b_mse.png}
+%\end{figure}
+
+%\begin{figure}[H]
+%    \centering
+%    \caption{}
+%    \label{fig:score_franke}
+%    \includegraphics[width=0.8\textwidth]{Figures/b_r2.png}
+%\end{figure}
 
 % TODO: error bars
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/b_beta.png}
+    \label{fig:beta_plot}
+    \caption{$\beta$-parameters of the OLS model on the Franke function for N=????. Ment to illustrate variation in $\beta_i$ as polynomial degree increases.}
 \end{figure}
+
+In figure \ref{fig:beta_plot} we see for each polynomial degree the beta parameters $\beta_i$ as a dot in the plot. This is for the OLS model on the Franke function. We see that as the polynomial degree increases, the $\beta$ values deviate more and more from zero. This can be a result of overfitting since we do not have any regularization parameter on the OLS model.
 
 %For bootstrap: should consider plotting a histogram of the estimators beta_hat^* as this should resemble a pdf. 
 
@@ -44,6 +69,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400.png}
+    
 \end{figure}
 
 
@@ -138,26 +164,7 @@ the hyper parameter, $\lambda = 0.001$
 
 %For critical discussion of centering/scaling, from lecture notes: "If our predictors represent different scales, then it is important to standardize the design matrix  by subtracting the mean of each column from the corresponding column and dividing the column with its standard deviation."
 
-%Small test here
 
-\begin{figure}
-     \centering
-     \begin{subfigure}[b]{0.5\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{Figures/b_mse.png}
-         \caption{}
-         \label{fig:}
-     \end{subfigure}%
-     \hfill
-     \begin{subfigure}[b]{0.5\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{Figures/b_r2.png}
-         \caption{}
-         \label{fig:}
-     \end{subfigure}
-        \caption{Mean squared error and score function for the Ordinary Least Squares (OLS) method. }
-        \label{fig:}
-\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
