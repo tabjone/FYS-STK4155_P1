@@ -5,7 +5,11 @@
 \usepackage{graphicx, verbatim, amsmath, amsfonts, geometry, float, import, bm}
 \usepackage{siunitx} % converts expression to SI units/notation , \num{10e-10}
 \usepackage[hidelinks]{hyperref}
+\usepackage{url}
 \usepackage{biblatex}
+\addbibresource{./refs.bib}
+
+% \bibliography{refs}
 
 %For putting in a box
 \usepackage{mdframed}
@@ -60,5 +64,15 @@
 \input{./conclusion.tex}
 \input{./appendix.tex}
 
+
+%  _____                           _      
+% | ____|_  ____ _ _ __ ___  _ __ | | ___ 
+% |  _| \ \/ / _` | '_ ` _ \| '_ \| |/ _ \
+% | |___ >  < (_| | | | | | | |_) | |  __/
+% |_____/_/\_\__,_|_| |_| |_| .__/|_|\___|
+%                           |_|           
+This is a reference to week 36 \cite{w36} and week 37 \cite{w37}  
+
+\printbibliography
 
 \end{document}
