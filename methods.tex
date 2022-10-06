@@ -47,13 +47,8 @@ to degree 12 in x and y.
 
 
 \subsubsection{Terrain data}
-%How did we implement it
-%Where did we find this
-%Why do we use it
-
-The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. This is given as a .tif file from the website and we use imageio's v2.imread to read the image. But as this dataset is too big, $1801\times3601$ pixels, for what computation power we have available there is two ways we could go forward. Either we start by rescaling the dataset and therefore lose information or we create a model on a smaller part of the data. We have chose the latter and will look at a slice in the top left corner of 20x20 datapoints. 
-
-
+The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. This is given as a .tif file from the website and we use imageio's v2.imread to read the image. But as this dataset is too big, 1801x3601 pixels, for what computation power we have available there is two ways we could go forward. Either we start by rescaling the dataset and therefore lose information or we create a model on a smaller part of the data. We have chose the latter and will look at a slice in the top left corner of 30x30 datapoints. We will do a polynomial fit on this using all the methods described in the theory section. 
+%%%HVIS DET NOEN SPESIFIKKE VERDIER DU HAR BRUKT FOR TERRAIN DATA KAN DU PUTTE DET HER%%%
 
 \begin{table}
     \centering
@@ -74,8 +69,6 @@ The data is from the Oslo area. The specific radar map we are looking at can be 
     \end{tabular} 
 \end{table}
 
-
-
 \subsection{Error estimation}
 %Maybe something about implementation of this
 To assess the accuracy of our models we will use the mean squared error
@@ -83,13 +76,11 @@ $$
 MSE(\boldsymbol{y},\tilde{\boldsymbol{y}}) = \frac{1}{n}
 \sum_{i=0}^{n-1}(y_i-\tilde{y}_i)^2,
 $$
-where n is the number of datapoints. This measures the difference between the model value and the actual value and will be taken from sklearn.metrics. 
-
-And we will use the score function
+where n is the number of datapoints. This measures the difference between the model value and the actual value and will be taken from sklearn.metrics. And we will use the score function
 $$
 R^2(\boldsymbol{y}, \tilde{\boldsymbol{y}}) = 1 - \frac{\sum_{i=0}^{n - 1} (y_i - \tilde{y}_i)^2}{\sum_{i=0}^{n - 1} (y_i - \bar{y})^2},
 $$
-which is used to score the model. The functions
+which is used to score the model and this will be taken from sklearn's LinearRegression().fit score function.
 
 \subsection{Linear regression}
 %Something about how we implemented this. Maybe a bit more text here also
