@@ -47,13 +47,12 @@ to degree 12 in x and y.
 
 
 \subsubsection{Terrain data}
-The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. This is given as a .tif file from the website and we use imageio's v2.imread to read the image. But as this dataset is too big, 1801x3601 pixels, for what computation power we have available there is two ways we could go forward. Either we start by rescaling the dataset and therefore lose information or we create a model on a smaller part of the data. We have chose the latter and will look at a slice in the top left corner of 30x30 datapoints. We will do a polynomial fit on this using all the methods described in the theory section. 
+The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. This is given as a .tif file from the website and we use imageio's v2.imread to read the image. But as this dataset is too big, 1801x3601 pixels, for what computation power we have available there is two ways we could go forward. Either we start by rescaling the dataset and therefore lose information or we create a model on a smaller part of the data. We have chose the latter and will look at a slice in the top left corner of 30x30 datapoints. Meaning we will look at an area of 900 square meters. We will do a polynomial fit on this using all the methods described in the theory section. 
 %%%HVIS DET NOEN SPESIFIKKE VERDIER DU HAR BRUKT FOR TERRAIN DATA KAN DU PUTTE DET HER%%%
 
 \begin{table}
     \centering
     \caption{Corner positions of Oslo radar topography data taken in the SRTM mission in the year 2000.}  
-    \label{tab:radar_data}
     \begin{tabular}{|c|c|}
     	\hline
     	Corner & Position\\
@@ -66,7 +65,7 @@ The data is from the Oslo area. The specific radar map we are looking at can be 
 	\hline
 	SW & Lat 59\degree 00'00"N, Long 10\degree 00'00"E\\
 	\hline
-    \end{tabular} 
+    \end{tabular}\label{tab:radar_data} 
 \end{table}
 
 \subsection{Error estimation}
@@ -80,25 +79,9 @@ where n is the number of datapoints. This measures the difference between the mo
 $$
 R^2(\boldsymbol{y}, \tilde{\boldsymbol{y}}) = 1 - \frac{\sum_{i=0}^{n - 1} (y_i - \tilde{y}_i)^2}{\sum_{i=0}^{n - 1} (y_i - \bar{y})^2},
 $$
-which is used to score the model and this will be taken from sklearn's LinearRegression().fit score function.
+which is used to score the model and we will take this from sklearn's LinearRegression().fit.score.
 
 \subsection{Linear regression}
-%Something about how we implemented this. Maybe a bit more text here also
-For the design matrix we used what is called a Vandermonde design matrix, a matrix for polynomial linear regression
-\begin{center}
-$\boldsymbol{X}=
-\begin{bmatrix} 
-1 & x_{0}&x_{0}^{2}&\dots &x_{0}^{p-1}
-\\1&x_{1}&x_{1}^{2}&\dots &x_{1}^{p-1}
-\\1&x_{2}&x_{2}^{2}&\dots &x_{2}^{p-1}
-\\ \vdots &\vdots &\vdots &\ddots &\vdots \\
-1&x_{n-1}&ax_{n-1}^{2}&\dots &x_{n-1}^{p-1}
-\end{bmatrix}
-$
-\end{center}
-
-random seed generator was used. 
-
 \subsubsection{Desing matrix}
 
 Our training data was fitted to polynomials up
@@ -114,16 +97,7 @@ to degree 12 in x and y. Thus, a design matrix of the form:
         1&x_{n-1} & y_{n-1} & x_{n-1}^2 & x_{n-1} y_{n-1} & y_{n-1}^2 & \dots &y_{n-1}^{p}, 
     \end{bmatrix}
 \end{equation*}
-was used for OLS-, Ridge- and Lasso regression
-The following code snippet was used to generate our Design matrix: 
-\begin{lstlisting}[language=Python]
-for i in range(1,p+1):
-    q = int((i)*(i+1)/2)
-    for k in range(i+1):
-        X[:,q+k] = (x**(i-k))*(y**k)
-return X
-\end{lstlisting}
-
+was used for OLS-, Ridge- and Lasso regression. To generate our design matrix we used the function
 \begin{lstlisting}
 FUNCTION create_X(x, y, n)
 	X = array(size p, size n)
@@ -136,19 +110,19 @@ FUNCTION create_X(x, y, n)
 	return X
 ENDFUNCTION
 \end{lstlisting}
-
-, where p is the polynomial degree and X is the Deign matrix. 
+This function is based on the lecture notes of Morten Hjorth-Jensen !!!?????%%%REFERENCE HERE%%%
+Here p is the polynomial degree and X is the Deign matrix. 
 In order to reduce the number of computations, we generated one Design matrix
-with number of features corresponding to the maximum polynomial degree $p_{max}
+with a number of features corresponding to the maximum polynomial degree $p_{max}
 = 12$. This matrix has l features including the intercept given by the
 equation: 
 \begin{equation*}
         l(p) = int(((p+1)*(p+2)/2))		
 \end{equation*}
 In order to fit the lower order polynomials this matrix was sliced in the
-following way:
+following way
 \begin{equation*}
-    X_{\text{train}}[:,l(p)] 
+    X_{\text{train}}[:,l(p)].
 \end{equation*}
 
   
@@ -171,61 +145,12 @@ following way:
 
 
 \subsection{Regression methods}
-Three different regression methods was applied to the Franke data and terrain
-data.  
-\subsubsection{OLS}
-%%OLS
-%How did we implement it
-%Why did we implement it
-%Did we do any testing
-The optimal values for beta with OLS regression $\hat{\bm{\beta}  }_{OLS}$ was
-calculated from equation
-\eqref{eq:beta_OLS}. The solution only exist when $(\bm{X}^T \bm{X})$ is
-invertible. To circumvent this problem we used numpy's pseudo inverse, to invert
-the matrix.
+Since sklearn does not implement the use of psudo-inverse, which is a SVD based inverse we will write our own regression methods and use numpy's psudo-inverse. This is because otherwise we get a limitation on the polynomial degree as the determinant of the Hessian matrix of the training set will go to zero, meaning that the matrix will be singular and not invertible. We show this in table \ref{tab:determinants}, where we used N=??????????? number of rows and $p$, the polynomial degree, number of columns.
 
-Our own OLS method was compared with Sklearn's method
-(sklearn.linear\_model.LinearRegression). For the same training data, without
-any re-sampling. Both methods agrees up to polynomial fits of degree nine.  
-
-\subsubsection{Ridge}
-%%Ridge
-%How did we implement it
-%Why did we implement it
-%Did we do any testing
-In the case of Ridge regression we introduced an array of regularization
-parameters $\lambda = [10^{-6}, 10^{-5}, \hdots, 10^{1}]$. The optimal values
-of beta with ridge regression $\hat{\bm{\beta } } _{Ridge} $ was calculated
-from equation \eqref{eq:beta_ridge}. 
-
-\subsubsection{Lasso}
-%%Lasso
-%How did we implement it
-%Why did we implement it
-%Did we do any testing
-The same regularization parameters as used for Ridge regression was used to find the
-optimal values for beta with Lasso regression, $\hat{\bm{\beta } } _{Lasso} $. We did not develop our
-own algorithm for Lasso regression. Insted we used the function provided by the
-sklearn python module.  
-
-\subsection{Resampling}
-%%Bootstrap
-%How did we implement it
-%Why did we implement it
-%Did we do any testing
-
-%%Cross-validation
-%How did we implement it
-%Why did we implement it
-%Did we do any testing
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Testing}
 \begin{table}
     \centering
     \caption{Determinant of $(X^T_{train}X_{train})$ with respect to polynomial
-    degree}  
+    degree, using N=???????}
     \begin{tabular}{|c|c|}
         \hline
         Polynomial degree & $det(X_{train}^T X_{train})$  \\
@@ -236,69 +161,74 @@ sklearn python module.
         \hline
         3 & 99.34\\
         \hline
-        4 & 7.91-10 \\
+        4 & 7.91$\cdot10^{-10}$ \\
         \hline
-        5 & 8.58-31 \\
+        5 & 8.58$\cdot10^{-31}$ \\
         \hline
-        6 & 1.92-64 \\
+        6 & 1.92$\cdot10^{-64}$ \\
         \hline
-        7 & 1.13-113 \\
+        7 & 1.13$\cdot10^{-113}$ \\
         \hline
-        8 & 5.28-181 \\
+        8 & 5.28$\cdot10^{-181}$ \\
         \hline
-        9 & 2.21-269 \\
+        9 & 2.21$\cdot10^{-269}$ \\
         \hline
         10 & 0.0 \\
         \hline
-        11 & -0.0 \\
+        11 & 0.0 \\
         \hline
         12 & 0.0 \\
         \hline
-         
-    \end{tabular} 
+    \end{tabular}\label{tab:determinants}
 \end{table}
 
 
-
-
-%THIS IF FROM THE LECTURE NOTES. BUT ABIT EXTENSIVE. MIGHT NOT NEED IT
-\begin{comment}
-How to set up the cross-validation for Ridge and/or Lasso
-
-* Define a range of interest for the penalty parameter.
-
-* Divide the data set into training and test set comprising samples $\{1, \ldots, n\} \setminus i$ and $\{ i \}$, respectively.
-
-* Fit the linear regression model by means of ridge estimation  for each $\lambda$ in the grid using the training set, and the corresponding estimate of the error variance $\boldsymbol{\sigma}_{-i}^2(\lambda)$, as
-
-\begin{align*}
-\boldsymbol{\beta}_{-i}(\lambda) & =  ( \boldsymbol{X}_{-i, \ast}^{T}
-\boldsymbol{X}_{-i, \ast} + \lambda \boldsymbol{I}_{pp})^{-1}
-\boldsymbol{X}_{-i, \ast}^{T} \boldsymbol{y}_{-i}
-\end{align*}
-
-* Evaluate the prediction performance of these models on the test set by $[y_i, \boldsymbol{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]$. Or, by the prediction error $|y_i - \boldsymbol{X}_{i, \ast} \boldsymbol{\beta}_{-i}(\lambda)|$, the relative error, the error squared or the R2 score function.
-
-* Repeat the first three steps  such that each sample plays the role of the test set once.
-
-* Average the prediction performances of the test sets at each grid point of the penalty bias/parameter. It is an estimate of the prediction performance of the model corresponding to this value of the penalty parameter on novel data. It is defined as
-
-\begin{align*}
-\frac{1}{n} \sum_{i = 1}^n \log\{L[y_i, \mathbf{X}_{i, \ast}; \boldsymbol{\beta}_{-i}(\lambda), \boldsymbol{\sigma}_{-i}^2(\lambda)]\}.
-\end{align*}
-\end{comment}
-
-
-\subsubsection{Terrain data}
+\subsubsection{OLS}
+%%OLS
 %How did we implement it
-%Where did we find this
-%Why do we use it
+%Why did we implement it
+%Did we do any testing
+The optimal values for beta with OLS regression $\hat{\bm{\beta}  }_{OLS}$ was
+calculated from equation
+\eqref{eq:beta_OLS}. We compared our own OLS with Sklearn's method
+(sklearn.linear\_model.LinearRegression). For the same training data, without
+any re-sampling. Both methods agrees up to polynomial fits of degree nine. ???????  
+%%MÅ HA PLOT ELLER LIKNENDE OM MAN SKAL SI DETTE. ELLER DET MÅ VÆRE I RESULTS.
 
-\subsection{Error estimation}
-%%Mean squared error
-%What is it
-%Why do we use it
+%Skrev noe liknende i avsnitt over
+%The solution only exist when $(\bm{X}^T \bm{X})$ is
+%invertible. To circumvent this problem we used numpy's pseudo inverse, to invert
+%the matrix.
 
-%%R^2
-%What is it
-%Why do we use it
+
+\subsubsection{Ridge}
+%%Ridge
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+In the case of Ridge regression we introduced an array of regularization
+parameters $\lambda = [10^{-6}, 10^{-5}, \hdots, 10^{1}]$. The optimal values
+of beta with ridge regression $\hat{\bm{\beta } } _{Ridge} $ was calculated
+from equation \eqref{eq:beta_ridge}. For implementing equation we used numpy.eye as the iidentity matrix. 
+
+\subsubsection{Lasso}
+%%Lasso
+%How did we implement it
+%Why did we implement it
+%Did we do any testing
+The same regularization parameters as used for Ridge regression was used to find the
+optimal values for beta with Lasso regression, $\hat{\bm{\beta } } _{Lasso} $. We did not develop our
+own algorithm for Lasso regression. Instead we used the function provided by the
+sklearn python module.  
+
+\subsection{Resampling}
+%%Bootstrap
+???????????
+%How did we implement it
+%Code snippet
+
+%%Cross-validation
+???????????
+%How did we implement it
+%Code snippet
+
