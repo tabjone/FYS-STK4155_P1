@@ -168,14 +168,16 @@ the hyper parameter, $\lambda = 0.001$
 \centering
 \begin{subfigure}{0.49\textwidth}
     \includegraphics[width=\textwidth]{Figures/g_ols_bias_variance_boots_n_20.png}
-    \caption{caption}
-    \label{fig:first}
+    \caption{Bias, Variancse and MSE obtained with OLS and bootstrap re-sampling.
+    20 re-samples was used to calculate the mean scores.}
+    \label{fig:g_ols_bias_variance_boots}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.49\textwidth}
     \includegraphics[width=\textwidth]{Figures/g_ols_r2_boots_n_20.png}
-    \caption{caption }
-    \label{fig:second}
+    \caption{R2 score obtained with OLS and bootstrap re-sampling.
+    20 re-samples was used to calculate the mean R2 score.}
+    \label{fig:g_ols_bias_variance_boots}
 \end{subfigure}
 \end{figure}
 
@@ -183,25 +185,71 @@ the hyper parameter, $\lambda = 0.001$
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/g_ridge_heatmap_boots_n_20.png}
+    \caption{Heatmap of MSE scores obtained with Ridge regression and Bootstrap
+    re-sampling, with 20 bootstrap re-sampling iterations.}  
+    \label{fig:g_ridge_boost_heatmap}  
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/g_ridge_hetmap_kfold_n_splits_10.png}
+    \caption{Heatmap of MSE scores obtained with Ridge regression and K-fold
+    re-sampling, with 10 splits.}  
+    \label{fig:g_ridge_kfold_heatmap}  
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/g_lasso_heatmap_n_boots_20.png}
+    \caption{Heatmap of MSE scores obtained with lasso regression and Bootstrap
+    re-sampling, with 20 re-samples.}  
+    \label{fig:g_lasso_boots_heatmap}  
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/g_lasso_kfold_n_splits_10.png}
+    \caption{Heatmap of MSE scores obtained with lasso regression and K-fold
+    re-sampling, with 10 splits.}  
+    \label{fig:g_lasso_boots_heatmap}  
 \end{figure}
 
 
 
+\begin{table}
+    \centering
+    \caption{Table of Best mean squared error (MSE) scores obtained with
+        different re-sampling and regression
+        methods. $\lambda $ is the best choice of regularization parameters for
+        Ridge and Lasso regression. n refers to number of re-samples/splits used in
+        Bootstrap and K-fold.}  
+    \label{tab:mse_best} 
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Polynomial degree & $\lambda$ & Regression method & Re-sampling method & MSE \\
+        \hline
+                          &   &  OLS & Bootstrap (n=20) & \\
+        \hline
+
+                          22 & $10^{-6}$ &   Ridge & Bootstrap (n=20) & 4.53\\
+        \hline
+
+                          30 &  $10^{-6}$ & Lasso&  Bootstrap (n=20) & 8.77\\
+        \hline
+
+                          & & OLS & K-fold (n=10)& \\
+        \hline
+
+                          19 &  0.01 & Ridge & K-fold (n=10)& 19.6\\
+        \hline
+
+                          19 & 0.01 &  Lasso & K-fold (n=10)& 19.79\\
+        \hline
+        
+                    
+         
+    \end{tabular} 
+\end{table}
 
 
 
