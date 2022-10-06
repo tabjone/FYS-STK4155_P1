@@ -192,7 +192,7 @@ the hyper parameter, $\lambda = 0.001$
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Figures/g_ridge_hetmap_kfold_n_splits_10.png}
+    \includegraphics[width=\textwidth]{Figures/g_ridge_heatmap_kfold_n_10.png}
     \caption{Heatmap of MSE scores obtained with Ridge regression and K-fold
     re-sampling, with 10 splits.}  
     \label{fig:g_ridge_kfold_heatmap}  
@@ -200,7 +200,7 @@ the hyper parameter, $\lambda = 0.001$
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Figures/g_lasso_heatmap_n_boots_20.png}
+    \includegraphics[width=\textwidth]{Figures/g_lasso_heatmap_boost_n_20.png}
     \caption{Heatmap of MSE scores obtained with lasso regression and Bootstrap
     re-sampling, with 20 re-samples.}  
     \label{fig:g_lasso_boots_heatmap}  
@@ -208,7 +208,7 @@ the hyper parameter, $\lambda = 0.001$
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Figures/g_lasso_kfold_n_splits_10.png}
+    \includegraphics[width=\textwidth]{Figures/g_lasso_heatmap_kfold_n_10.png}
     \caption{Heatmap of MSE scores obtained with lasso regression and K-fold
     re-sampling, with 10 splits.}  
     \label{fig:g_lasso_boots_heatmap}  
@@ -228,13 +228,13 @@ the hyper parameter, $\lambda = 0.001$
         \hline
         Polynomial degree & $\lambda$ & Regression method & Re-sampling method & MSE \\
         \hline
-                          &   &  OLS & Bootstrap (n=20) & \\
+                          18 &   &  OLS & Bootstrap (n=20) & 3.12\\
         \hline
 
-                          22 & $10^{-6}$ &   Ridge & Bootstrap (n=20) & 4.53\\
+                          24 & $10^{-6}$ &   Ridge & Bootstrap (n=20) & 4.22\\
         \hline
 
-                          30 &  $10^{-6}$ & Lasso&  Bootstrap (n=20) & 8.77\\
+                          30 &  $10^{-6}$ & Lasso&  Bootstrap (n=20) & 8.88\\
         \hline
 
                           & & OLS & K-fold (n=10)& \\
@@ -243,16 +243,18 @@ the hyper parameter, $\lambda = 0.001$
                           19 &  0.01 & Ridge & K-fold (n=10)& 19.6\\
         \hline
 
-                          19 & 0.01 &  Lasso & K-fold (n=10)& 19.79\\
+                          19 & 0.01 &  Lasso & K-fold (n=10)& 19.73\\
         \hline
-        
-                    
-         
     \end{tabular} 
 \end{table}
 
 
 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/g_ols_ridge_lasso_boots_n_20.png}
+\end{figure}
 
 
 
