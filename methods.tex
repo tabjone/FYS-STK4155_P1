@@ -10,11 +10,11 @@
 %Mention train/test split, 2/3 or 4/5 split is usual. Mention that this is usual and then what we used. Where exactly to mention this? May need to restructure method section a bit.
 
 \subsection{Datasets}
-Our data was generated from a random uniform distribution in the interval [0,
-1]. Two arrays was generated at random, with each containing n=20 data points. 
+Our data was generated from a random uniform distribution on the interval [0,
+1] using the numpys random module. Two arrays was generated at random, with each containing n=20 data points. 
 These arrays, x and y was combined in two mesh grids, X and Y each of size n x n. Thus, our
 total dataset consisted of 400 data points. Before any fitting was done on the
-data the mesh rids was reshaped into one dimensional arrays.  
+data the mesh grids was reshaped into one dimensional arrays.  
 
 \subsubsection{Franke Function}
 %What is it
@@ -22,7 +22,7 @@ data the mesh rids was reshaped into one dimensional arrays.
 %Why did we implement it
 %Any testing to know its working correctly? (I think not needed)
 
-The Franke Function was used to test and validate our models. 
+The Franke Function was used to test and validate our models.
 The Franke function is a waited sum of four exponentials and takes two
 arguments as input: 
 \begin{align*}
@@ -39,7 +39,7 @@ to test and validate that our own developed algorithms worked properly.
 Random normal distributed noise with an amplitude of 0.2, zero mean and a
 standard deviation of 1 was added to the data generated from the Franke
 function. Our data was split in train and test data, with $20\%$ preserved for
-testing purposes. Sklearn's trian\_test\_split function was used for splitting
+testing purposes, which is a common train/test split. Sklearn's train\_test\_split function was used for splitting
 of the data. In order to keep the dataset consistent between different runs, a
 random seed generator was used. Our training data was fitted to polynomials up
 to degree 12 in x and y. 
@@ -51,7 +51,9 @@ to degree 12 in x and y.
 %Where did we find this
 %Why do we use it
 
-The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://image_link.com}{DIREKTE LINK TIL BILDET}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. 
+The data is from the Oslo area. The specific radar map we are looking at can be downloaded from \href{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}{https://earthexplorer.usgs.gov/scene/metadata/full/5e83a3ee1af480c5/SRTM1N59E010V3/}. If the link is outdated, the information of the image location can be found in table \ref{tab:radar_data}. It's from the SRTM mission in February of 2000 with entity ID SRTM1N59E010V3. The data has a resolution of one arc-sec, which gives each pixel a resolution of 30m. This is given as a .tif file from the website and we use imageio's v2.imread to read the image. But as this dataset is too big, 1801× 3601 pixels, for what computation power we have available there is two ways we could go forward. Either we start by rescaling the dataset and therefore lose information or we create a model on a smaller part of the data. We have chose the latter and will look at a slice in the top left corner of 20x20 datapoints. 
+
+
 
 \begin{table}
     \centering
@@ -81,11 +83,13 @@ $$
 MSE(\boldsymbol{y},\tilde{\boldsymbol{y}}) = \frac{1}{n}
 \sum_{i=0}^{n-1}(y_i-\tilde{y}_i)^2,
 $$
-where n is the number of datapoints. This measures the difference between the model value and the actual value. And we will use the score function
+where n is the number of datapoints. This measures the difference between the model value and the actual value and will be taken from sklearn.metrics. 
+
+And we will use the score function
 $$
 R^2(\boldsymbol{y}, \tilde{\boldsymbol{y}}) = 1 - \frac{\sum_{i=0}^{n - 1} (y_i - \tilde{y}_i)^2}{\sum_{i=0}^{n - 1} (y_i - \bar{y})^2},
 $$
-which is in essence just one minus the MSE in this case, but can be more advanced in other cases. We use this to give a score to the model.
+which is used to score the model. The functions
 
 \subsection{Linear regression}
 %Something about how we implemented this. Maybe a bit more text here also
