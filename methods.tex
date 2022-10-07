@@ -177,8 +177,15 @@ following way
 
 
 
-\subsection{Regression methods}
-Since sklearn does not implement the use of psudo-inverse, which is a SVD based inverse we will write our own regression methods and use numpy's psudo-inverse. This is because otherwise we get a limitation on the polynomial degree as the determinant of the Hessian matrix of the training set will go to zero, meaning that the matrix will be singular and not invertible. We show this in table \ref{tab:determinants}, where we used N=??????????? number of rows and $p$, the polynomial degree, number of columns.
+\subsection{Regression methods} \label{sec:regression_methods}
+Since sklearn does not implement the use of psudo-inverse, which is a SVD based
+inverse we will write our own regression methods and use numpy's psudo-inverse.
+This is because otherwise we get a limitation on the polynomial degree as the
+determinant of the Hessian matrix of the training set will go to zero, meaning
+that the matrix will be singular and not invertible. We show this in table
+\ref{tab:determinants}, where we calculated the determinant of the Hessian matrix with respect to the
+training data, with $N_{\text{train }} = 160 $ rows, for different polynomial
+degrees (p). 
 
 \begin{table}
     \centering
@@ -221,11 +228,26 @@ Since sklearn does not implement the use of psudo-inverse, which is a SVD based 
 %How did we implement it
 %Why did we implement it
 %Did we do any testing
-The optimal values for beta with OLS regression $\hat{\bm{\beta}  }_{OLS}$ was
+We first tried a simple Ordinary Least Square model for fitting the train data. 
+The optimal values for beta (our polynomial coefficient's) with OLS regression $\hat{\bm{\beta}  }_{OLS}$ was
 calculated from equation
 \eqref{eq:beta_OLS}. We compared our own OLS with Sklearn's method
 (sklearn.linear\_model.LinearRegression). For the same training data, without
-any re-sampling. Both methods agrees up to polynomial fits of degree nine. ???????  
+any re-sampling. Both methods agreed up to polynomial fits of degree nine.
+For polynomials of degree larger than 9, the two methods was no longer in
+agreement on the Mean Squared Error (see figure \ref{fig:ols_skl_vs_own}). This
+probably due to the fact that sklearn's OLS method not uses the pseudo inverse
+as discussed in section \ref{sec:regression_methods} 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Figures/test_mse_sklearn_vs_own.png}
+    \caption{Comparison MSE produced from our own OLS method and sklearn's,
+    predicted on the test and train data obtained from the Franke function. The
+training data was used fro finding the optimal model with OLS}  
+    \label{fig:ols_skl_vs_own} 
+\end{figure}
+
 %%MÅ HA PLOT ELLER LIKNENDE OM MAN SKAL SI DETTE. ELLER DET MÅ VÆRE I RESULTS.
 
 %Skrev noe liknende i avsnitt over
