@@ -116,7 +116,11 @@ To check the speculation of overfitting on the lower number of datapoints we loo
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/d_kfold_ols_n_10.png}
+    \caption{Mean squared error using cross-Validation with 10 splits on the Franke function.}
+    \label{fig:kfold_ols_franke}
 \end{figure}
+
+In figure \ref{fig:kfold_ols_franke} we can see the MSE of Cross-validation with 10 spilts on the Franke function using OLS. This is on the test data. We see that polynomial degree over 8 produces weird results. This can be because of overfitting. 
 
 %%%%%%%%%%%%%%% Part e %%%%%%%%%%%%%%%
 % * bootstrap analysis for ridge as in part c
@@ -125,28 +129,36 @@ To check the speculation of overfitting on the lower number of datapoints we loo
 % * study bias variance trade off for different values of lambda 
 
 The minimum MSE from Ridge regression was found for polynomial degree of 6 with
-the hyper parameter, $\lambda = 0.001$
-\begin{figure}[H]
-    \centering
-    \caption{ridge}  
-    \label{fig:e_ridge} 
-    \includegraphics[width=1\textwidth]{Figures/e_ridge_n_boots_100.png}
-\end{figure}
+the hyper parameter, $\lambda = 0.001$. This is seen in figure \ref{fig:ridge_blabla}. Here we are to low in polynomial degree to see the typical bias-variance pattern.
 
 \begin{figure}[H]
     \centering
+    \caption{Ridge resgression. Franke function.}
+    \label{fig:ridge_blabla}
     \includegraphics[width=0.8\textwidth]{Figures/e_ridge_bias_variance_lamb_0_001.png}
 \end{figure}
 
 
 \begin{figure}[H]
     \centering
+    \caption{ridge bootstrap}  
+    \label{fig:e_ridge} 
+    \includegraphics[width=1\textwidth]{Figures/e_ridge_n_boots_100.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{ridge cv}
+    \label{fig:e_ridge_kfold}
     \includegraphics[width=0.8\textwidth]{Figures/e_ridge_kfold_n_10.png}
 \end{figure}
 
+Now we want to find the optimal $\lambda$ parameter 
+
+
 %%%%%%%%%%%%%%% Part f %%%%%%%%%%%%%%%
 % * Lasso regression
-% * give a critical discussion of mse, ridge, lasso
+% * give a critical discussion of mse, ridge, lasso, in theory I discussed benefits of methods.
 % * Which model fits the data best 
 % * bootstrap bias variance analysis of lasso
 % * MSE analysis with kfold
