@@ -65,24 +65,48 @@ In figure \ref{fig:beta_plot} we see for each polynomial degree the beta paramet
 %   * number of data points
 %   * training and test data
 
+%%bootstrap figures for different number of datapoints
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/c_bootstrap_ols_n_data_400.png}
+         \caption{400 datapoints}
+     \end{subfigure}%
+     \hfill
+     \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/c_bootstrap_ols_n_data_1600.png}
+         \caption{1600 datapoints}
+     \end{subfigure}
+        \caption{Bootstrap with 100 resamples for the OLS method on the Franke function on the test set.}
+        \label{fig:bootstrap_ols_franke_test}
+\end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400.png}
+In figure \ref{fig:bootstrap_ols_franke_test} we can see the the bootstrap used on the OLS method on the Franke function for 100 resamples and two different number of datapoints. We see that for the lower number of points we get signs of overfitting, while we do not see this behaviour at these polynomial degrees for 1600 datapoints. We see that for 400 datapoints the optimal bias-variance tradeoff happens at a polynomial degree of 11. 
+
+
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400.png}
     
-\end{figure}
+%\end{figure}
 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_1600.png}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_1600.png}
+%\end{figure}
 
 % XXX: Is this expected behaviour?
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400_train_data.png}
+    \caption{Bootstrap with 100 resamples for the OLS method on the Franke function on the training set with 400 datapoints.}
+    \label{fig:bootstrap_ols_franke_train}
 \end{figure}
+
+To check the speculation of overfitting on the lower number of datapoints we look at figure \ref{fig:bootstrap_ols_franke_train} and we see here that the variance shoots off as the polynomial degree gets to 12. 
 
 %%%%%%%%%%%%%%% Part d %%%%%%%%%%%%%%%
 % Use k-fold and evaluate MEE on test data
