@@ -1,6 +1,78 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Franke Data}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/franke_data_and_model_ridge_best.png}
+    \caption{Left figures shows the frank function plotted as a function of x
+    and in y coordinates the intervall [0,1]. The red and yellow dots shows or
+train- and test-data with added normal distributed noise, $0.2 \cdot
+\sigma(0,1)$. The lowest MSE, calculated with bootstrap re-sampling was obtained
+with Ridge regression with a regularization parameter $\lambda = 10^{-5}$ and a
+polynomial degree of 5. Right figure shows the best fit model. Train- and
+test-data is plotted as for the left figure.} 
+\end{figure}
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[t]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/franke_ols_ridge_lasso_boots.png}
+         \caption{Mean MSE score for 100 bootstrap re-samples. MSE scores is
+             plotted as a function of polynomial degree, for the best fit
+             models obtained with OLS, Ridge ($\lambda =
+             10^{-j}$) and Lasso ($\lambda = 10^{-5}$) regression.}  
+         \label{} 
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[t]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Figures/franke_ols_ridge_lasso_kfold.png}
+         \caption{Mean of MSE scores calculated on all ten test folds with K-fold
+             re-sampling. Our best fit models from OLS, Ridge ($\lambda =
+             10^{5}$) and Lasso ($10^{-5}$) regression
+     is plotted as a function of polynomial degree. $\lambda $ is the 
+ regularization parameter.}  
+         \label{fig}
+     \end{subfigure}
+
+\end{figure}
+
+
+\begin{table}
+    \centering
+    \caption{Table of Best mean squared error (MSE) scores obtained with
+        different re-sampling and regression
+        methods. The training- and testing-data splits from the Franke function
+        was used for model fitting and
+        prediction respectively. $\lambda $ is the best choice of regularization parameters for
+        Ridge and Lasso regression. n refers to number of re-samples/splits used in
+        Bootstrap and K-fold.}  
+    \label{tab:franke_mse_best} 
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Polynomial degree & $\lambda$ & Regression method & Re-sampling method & MSE \\
+        \hline
+                      4    &    & OLS & Bootstrap (n=100) & 0.04440 \\
+        \hline
+                      5   & $10^{-4}$  & Ridge & Bootstrap (n=100)& 0.04425 \\
+        \hline
+                      11  & $10^{-5}$  & Lasso & Bootstrap (n=100)& 0.04673 \\
+                      
+        \hline
+                      5    &   & OLS &  K-fold (n=10) &  0.04181\\
+        \hline
+                      6   &  $10^{-5}$  & Ridge &  K-fold (n=10) & 0.04155 \\
+        \hline
+                      12  &  $10^{-5}$ & Lasso &  K-fold (n=10) & 0.04548 \\
+        \hline
+    \end{tabular} 
+\end{table}
+
+% TODO OLS scores
+
 %%%%%%%%%%%%%%% Parameters %%%%%%%%%%%%%%%
 % n_data = 20 - n_data in x and y: n_tot = 20*20
 % test_size = 0.2
@@ -205,6 +277,36 @@ Now we want to find the optimal $\lambda$ parameter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Terrain data}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/terrain_data_and_model_ols_best.png}
+    \caption{The left figure shows the surface of our sliced terrain data. Our
+    train and test-data are represented by yellow and purple dots respectively.
+Hight above sea level in meters is plotted on the z axis. The x- and y-axis is
+takes values in intervall [0, 1]. This interval scales to 30m in real
+coordinates. The left figure shows our best fit model obtained with OLS for
+polynomial degree 18. Again the training- and test-data is plotted as in the
+left figure.}  
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Figures/terrain_best_ols_ridge_lasso_boots.png}
+        \caption{Mean of MSE scores calculated with bootstrap on the terrain data.\\ $n_{\text{boots}} =
+        20$ re-samples was used. The mean MSE predicted on the test-data is plotted as
+    function of polynomial degree for OLS-, Ridge- ($\lambda = 10^{6}$) and
+Lasso-regression (\lambda = 10^{-6})   }  
+    \end{subfigure}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{Figures/terrain_best_ols_ridge_lasso_kfold.png}
+        \caption{Mean of MSE predicted on each test fold with use of the K-fold
+        re-sampling technique. A total of ten folds was used. The MSE score is plotted as a function
+    of polynomial degree for OLS-, Ridge- ($\lambda = 0.1$) and Lasso-regression
+($\lambda = 10^{-4}$)}  
+    \end{subfigure}
+\end{figure}
+
 
 
 \begin{figure}
@@ -266,7 +368,7 @@ Now we want to find the optimal $\lambda$ parameter
         methods. $\lambda $ is the best choice of regularization parameters for
         Ridge and Lasso regression. n refers to number of re-samples/splits used in
         Bootstrap and K-fold.}  
-    \label{tab:mse_best} 
+    \label{tab:terrain_mse_best} 
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         Polynomial degree & $\lambda$ & Regression method & Re-sampling method & MSE \\
@@ -280,7 +382,7 @@ Now we want to find the optimal $\lambda$ parameter
                           30 &  $10^{-6}$ & Lasso&  Bootstrap (n=20) & 8.88\\
         \hline
 
-                          5 &  & OLS & K-fold (n=10)& \\
+                          5 &  & OLS & K-fold (n=10)& 21.23\\
         \hline
 
                           8 &  0.1 & Ridge & K-fold (n=10)& 18.74\\ % XXX: new - forgot to inspect deg 0-10
