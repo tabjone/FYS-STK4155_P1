@@ -280,13 +280,14 @@ Now we want to find the optimal $\lambda$ parameter
                           30 &  $10^{-6}$ & Lasso&  Bootstrap (n=20) & 8.88\\
         \hline
 
-                          & & OLS & K-fold (n=10)& \\
+                          5 &  & OLS & K-fold (n=10)& \\
         \hline
 
-                          19 &  0.01 & Ridge & K-fold (n=10)& 19.6\\
+                          8 &  0.1 & Ridge & K-fold (n=10)& 18.74\\ % XXX: new - forgot to inspect deg 0-10
+                          % 19 &  0.01 & Ridge & K-fold (n=10)& 19.6  XXX: old
         \hline
-
-                          19 & 0.01 &  Lasso & K-fold (n=10)& 19.73\\
+                          7 & 0.001 &  Lasso & K-fold (n=10)& 18.77\\ % XXX: new
+                          % 19 & 0.01 &  Lasso & K-fold (n=10)& 19.73\\ % XXX: old
         \hline
     \end{tabular} 
 \end{table}
