@@ -4,8 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Franke Data}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/franke_data_and_model_ridge_best.png}
+    \centering \includegraphics[width=0.8\textwidth]{Figures/franke_data_and_model_ridge_best.png}
     \caption{Left figures shows the frank function plotted as a function of x
     and in y coordinates the intervall [0,1]. The red and yellow dots shows or
 train- and test-data with added normal distributed noise, $0.2 \cdot
@@ -205,7 +204,7 @@ the hyper parameter, $\lambda = 0.001$. This is seen in figure \ref{fig:ridge_bl
 
 \begin{figure}[H]
     \centering
-    \caption{Ridge resgression. Franke function.}
+    \caption{Ridge resgression on the Franke function.}
     \label{fig:ridge_blabla}
     \includegraphics[width=0.8\textwidth]{Figures/e_ridge_bias_variance_lamb_0_001.png}
 \end{figure}
@@ -213,14 +212,14 @@ the hyper parameter, $\lambda = 0.001$. This is seen in figure \ref{fig:ridge_bl
 
 \begin{figure}[H]
     \centering
-    \caption{ridge bootstrap}  
+    \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for bootstrap on Ridge for on the Franke function.}  
     \label{fig:e_ridge} 
     \includegraphics[width=1\textwidth]{Figures/e_ridge_n_boots_100.png}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{ridge cv}
+    \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Ridge regression on the Franke function.}
     \label{fig:e_ridge_kfold}
     \includegraphics[width=0.8\textwidth]{Figures/e_ridge_kfold_n_10.png}
 \end{figure}
@@ -238,10 +237,14 @@ Now we want to find the optimal $\lambda$ parameter
 
 \begin{figure}[H]
     \centering
+	\caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
+	\label{fig:f_lasso_bootstrap}
     \includegraphics[width=0.8\textwidth]{Figures/f_lasso_bootstrap_n_100.png}
 \end{figure}
 
 \begin{figure}[H]
+	\caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
+	\label{fig:f_lasso_kflod}
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/f_lasso_kfold_n_10.png}
 \end{figure}
@@ -296,7 +299,7 @@ left figure.}
         \caption{Mean of MSE scores calculated with bootstrap on the terrain data.\\ $n_{\text{boots}} =
         20$ re-samples was used. The mean MSE predicted on the test-data is plotted as
     function of polynomial degree for OLS-, Ridge- ($\lambda = 10^{6}$) and
-Lasso-regression (\lambda = 10^{-6})   }  
+Lasso-regression ($\lambda = 10^{-6})$   }  
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \includegraphics[width=\textwidth]{Figures/terrain_best_ols_ridge_lasso_kfold.png}
@@ -394,15 +397,18 @@ Lasso-regression (\lambda = 10^{-6})   }
     \end{tabular} 
 \end{table}
 
+We see in table \ref{tab:terrain_mse_best} that the optimal polynomial degrees are higher for Ridge and Lasso both with bootstrap and Cross-Validation.
 
 
 
 \begin{figure}[H]
     \centering
+	\label{fig:g_ols_ridge_lasso_boots}
+	\caption{Mean squared error as a function of polynomial degree for the regression methods OLS, Ridge and Lasso using ? number of bootstraps on the terrain data.}
     \includegraphics[width=0.8\textwidth]{Figures/g_ols_ridge_lasso_boots_n_20.png}
 \end{figure}
 
-
+In figure \ref{fig:g_ols_ridge_lasso_boots} we can see the MSE for the three different regression methods. We see that Lasso and Ridge regression is more stable but OLS beats both methods at around polynomial degree 12. But then we see overfitting of the OLS method at higher degree polynomials.
 
 
 
