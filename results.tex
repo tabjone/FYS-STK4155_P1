@@ -327,8 +327,10 @@ Lasso-regression ($\lambda = 10^{-6})$   }
     20 re-samples was used to calculate the mean R2 score.}
     \label{fig:g_ols_bias_variance_boots}
 \end{subfigure}
+\label{fig:g_ols_sub_plot}
 \end{figure}
 
+In figure \ref{fig:g_ols_sub_plot} we can see the score function and bias-variance plot for the OLS method using bootstrapping with 20 re-samples on the terrain data.
 
 \begin{figure}[H]
     \centering
@@ -362,7 +364,7 @@ Lasso-regression ($\lambda = 10^{-6})$   }
     \label{fig:g_lasso_boots_heatmap}  
 \end{figure}
 
-
+In figure \ref{fig:g_ridge_boost_heatmap}, \ref{fig:g_ridge_kfold_heatmap}, \ref{fig:g_lasso_boots_heatmap} and \ref{fig:g_lasso_boots_heatmap} we see the MSE for a number of polynomial degreees and $\lambda$'s on the terrain data function. We notice that for Lasso a bigger $\lambda$ tend to provide smaller MSE, while for Ridge it's the opposite. This means the OLS method and the Ridge method would produce similar results. 
 
 \begin{table}
     \centering
