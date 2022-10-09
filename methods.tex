@@ -25,13 +25,13 @@ data the mesh grids was reshaped into one dimensional arrays.
 The Franke Function was used to test and validate our models.
 The Franke function is a waited sum of four exponentials and takes two
 arguments as input: 
-\begin{align*}
+\begin{align}
     \label{eq:franke_function} 
     f(x,y) &= \frac{3}{4}exp\left(-\frac{(9x-2)^2}{4}-\frac{(9y-2)^2}{4} \right)
     + \frac{3}{4}exp\left(-\frac{(9x+1)^2}{49}-\frac{(9y+1)}{10} \right) \\
            &+ \frac{1}{2}exp\left(-\frac{(9x-7)^2}{4}-\frac{(9y-3)^2}{4}
            \right)-\frac{1}{5}exp(-(9x-4)^2-(9y-7)^2)
-\end{align*}
+\end{align}
 This function is widely used for testing of different fitting algorithms. 
 Before we applied our fitting algorithms on the terrain data, we used this function
 to test and validate that our own developed algorithms worked properly.    
@@ -39,11 +39,40 @@ to test and validate that our own developed algorithms worked properly.
 Random normal distributed noise with an amplitude of 0.2, zero mean and a
 standard deviation of 1 was added to the data generated from the Franke
 function. Our data was split in train and test data, with $20\%$ preserved for
-testing purposes, which is a common train/test split. Sklearn's train\_test\_split function was used for splitting
+testing purposes, which is a common train/test split. Skliearms train\_test\_split function was used for splitting
 of the data. In order to keep the dataset consistent between different runs, a
 random seed generator was used. Our training data was fitted to polynomials up
 to degree 12 in x and y. 
 
+The following step by step guide can be used to generate a similar dataset: 
+
+
+
+\begin{mdframed}[backgroundcolor=black!10]
+\begin{enumerate}[noitemsep]
+\item Generate two arrays x and y, each with uniform distributed values in the
+interval [0, 1] with N = 20 data points. 
+\item Create a mesh grid of x values (X) and y values (Y), both with shapes $N
+\times N$ 
+\item Reshape both mesh grids to one-dimensional arrays.  
+\item Generate your franke data: $y_{\text{data }} = f(X, Y) + 0.2 \cdot  
+\mathcal{N}(0,1)$, where f is equation \ref{eq:franke_function}  
+\item Generate your design matrix ($X_{\text{data}} $) with shape $N^2 \times l(p_{\text{max}} )$,
+where $l$ is given by equation \ref{eq:l_features} and $p_{\text{max}} = 12 $
+is the maximum polynomial degree. For further details on how the generate the
+design matrix see section \ref{sec:design_matrix}.  
+\item $X_{\text{data}}$ and $y_{\text{data }} $ is then split into training: 
+\begin{equation*}
+    X_{\text{train }}^{220 \times x l(p_{max} )}, y_{\text{train }^{220\times 1}} 
+\end{equation*}
+and test data: 
+\begin{equation*}
+    X_{\text{test }}^{80\times l(p_{max} )},  y_{\text{test }^{80\times1}}.
+\end{equation*},
+where a test size of 20\% of our data was used. 
+\end{enumerate}
+
+\end{mdframed}
 
 
 \subsubsection{Terrain data}
@@ -114,7 +143,7 @@ $$
 which is used to score the model and we will take this from sklearn's LinearRegression().fit.score.
 
 \subsection{Linear regression}
-\subsubsection{Design matrix}
+\subsubsection{Design matrix} \label{sec:design_matrix} 
 
 Our training data was fitted to polynomials up
 to degree 12 in x and y for the Franke function and data, and up to degree 30
@@ -149,9 +178,10 @@ In order to reduce the number of computations, we generated one Design matrix
 with number of features corresponding to the maximum polynomial degree $p_{max}
 = 12$. This matrix has l features including the intercept given by the
 equation: 
-\begin{equation*}
+\begin{equation}
+        \label{eq:l_features} 
         l(p) = int(((p+1)*(p+2)/2))		
-\end{equation*}
+\end{equation}
 In order to fit the lower order polynomials this matrix was sliced in the
 following way
 \begin{equation*}
