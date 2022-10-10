@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
+\section{Results and Discussion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Franke Data}
@@ -14,7 +14,7 @@ polynomial degree of 5. Right figure shows the best fit model. Train- and
 test-data is plotted as for the left figure.} 
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
      \centering
      \begin{subfigure}[t]{0.49\textwidth}
          \centering
@@ -83,7 +83,7 @@ test-data is plotted as for the left figure.}
 % * and R2 score
 % * blot parameters beta
 % * Your code has to include a scaling/centering:
-%   XXX: not included, data is already scaled in intervall [-1, 1]
+%   XXX: not included, data is already scaled in intervall [0, 1]
 
 \begin{figure}
      \centering
@@ -100,7 +100,34 @@ test-data is plotted as for the left figure.}
         \label{fig:mse_and_score_franke}
 \end{figure}
 
-In figure \ref{fig:mse_and_score_franke} we see the mean squared error and score on the Franke function for a polynomial up to degree five. If our predictors represent different scales, then it is important to standardize the design matrix. And as the x and y data is on the same interval $[0, 1]$ we do not need to scale the data. We see from the figure that we get a big decrease in MSE and big increase in $R^2$ for a polynomial degree up to five. For degree five we do not see much change. 
+% Results and discussion of r2 and mse franke plots.  
+In figure \ref{fig:mse_and_score_franke} we see the mean squared error and R2
+score on the Franke function for a polynomial up to degree five. The Predicted
+MSE scores with respect to polynomial degree was predicted on both the training
+aand test data. As expected out model gets better as the polynomial degree
+increases. That is, our MSE score decreases and R2 score increases. For
+polynomial degree 5, the MES score increase for the test data and decreases for
+the training data. The opposite behavior is seen for the R2 score. This is an
+expected behavior. For increases polynomial degree we should expect that
+predictions on the training data gets better and betters, since our model is
+trained on the exact same data. Thus, for the prediction on training data we
+expect the MES to approach zero as the polynomial degree increases. The same
+behaviour can not be expected when we predict MES and R2 score on the test
+data. Our model has never seen the test data. We expect that the MES score
+predicted on the test data decreases to a certain polynomial degree. Afterward
+it will increase, when we have reached over fitting. That is, our model is
+fitted to well to the training data, and is no longer generalizable to other
+similar distributed datasets. This is the exact behavior we observe in figure
+\ref{fig:mse_and_score_franke}. However, the effect if over fit is not
+presented very well cause of the low polynomial degree. 
+
+% Scaling - TODO - put in method section? 
+If our
+predictors represent different scales, then it is important to standardize the
+design matrix. 
+And as the x and y data is on the same interval $[0, 1]$ we do
+not need to scale the data.
+% TODO: explain why
 
 %\begin{figure}[H]
 %    \centering
@@ -121,10 +148,32 @@ In figure \ref{fig:mse_and_score_franke} we see the mean squared error and score
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/b_beta.png}
     \label{fig:beta_plot}
-    \caption{$\beta$-parameters of the OLS model on the Franke function for N=????. Ment to illustrate variation in $\beta_i$ as polynomial degree increases.}
+    \caption{ $\beta _i$ values plotted with respect polynomial degree for our best
+    fit model with OLS on the training data, $\bm{X} _{train} $ 
+    The colors represent specific $\beta _i$, in order to make it possible to
+    track specific $\beta _i$ for different polynomial degrees.      }
 \end{figure}
 
-In figure \ref{fig:beta_plot} we see for each polynomial degree the beta parameters $\beta_i$ as a dot in the plot. This is for the OLS model on the Franke function. We see that as the polynomial degree increases, the $\beta$ values deviate more and more from zero. This can be a result of overfitting since we do not have any regularization parameter on the OLS model.
+% Discussion of beta's
+In figure \ref{fig:beta_plot} we see for each polynomial degree the beta
+parameters $\beta_i$ as a dot in the plot. This is for the OLS model on the
+training data from the Franke function. We see that as the polynomial degree increases, the $\beta$
+values deviate more and more from zero. This can be a result of over fitting
+since we do not have any regularization parameter on the OLS model.
+
+We expect the different $\beta _i$ does not vary significantly with increasing
+polynomial degree. It's not easy to say if this is the case from inspection of
+the plot, due to a limited number of colors and large number of $\beta _i$. It seems to be the case for the
+lower $\beta _i$ terms. It does not make intuitively sense if a certain $\beta _i$ varies a
+lot for different polynomial degree's. The less complex model (lower poly deg) should to a certain degree
+reflect the values in a more complex model. By introducing higher polynomials
+and hence more $\beta _i$'s, our model can represent more and more complex
+patterns (more variations in shorter length scale). However we expect the lower
+oerder $\beta _i$ to be more or less the same. Because they represent the less
+complex parts of our model. 
+ 
+% TODO: Discuss variance of beta
+
 
 %For bootstrap: should consider plotting a histogram of the estimators beta_hat^* as this should resemble a pdf. 
 
@@ -183,6 +232,7 @@ To check the speculation of overfitting on the lower number of datapoints we loo
 % Use k-fold and evaluate MEE on test data
 % compare with bootstrap
 % compare with sklearn
+
 
 \begin{figure}[H]
     \centering
