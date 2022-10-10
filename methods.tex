@@ -303,19 +303,120 @@ from equation \eqref{eq:beta_ridge}. For implementing equation we used numpy.eye
 %Did we do any testing
 The same regularization parameters as used for Ridge regression was used to find the
 optimal values for beta with Lasso regression, $\hat{\bm{\beta } } _{Lasso} $. We did not develop our
-own algorithm for Lasso regression. Instead we used the function provided by the
-sklearn python module.  
+own algorithm for Lasso regression. Insted we used the function provided by the
+sklearn's python module.  
 
 \subsection{Resampling}
+
 %%Bootstrap
-???????????
+%How did we implement it
+%Code snippet
+%and what parameter values we used
+\subsubsection{Bootstrap}
+Bootstrap re-sampling was done on the training data with $N_{train } = 320$
+data points for the Franke data and $N_{train } = 720$ data points for the
+terrain data.
+
+Our bootstrap algorithm used the re-sample dunction from learn,
+\verb|sklearn.utils.resample|. This function was used to draw $N_{train } $
+re-samples from our training (data with replacement), $N_{boots} $ times. For
+each re-sample our best fit model for the given regression method, polynomial
+degree and regularization parameters was found. Our predicted values from our
+test data ($\bm{X} _{train} $) was stored in an matrix of size $N_{test} \times
+N_{boots} $. Different scores (MSE, Bias, Variacne, R2) was calculated in this
+matrix. 
+
+Bootstrap was used to estimate sample statistics from our dataset. $N_{boots} =
+1100$ bootstrap iterations was used to predict sample statistics on the Franke
+data. Only $N_{boots} = 20 $ iterations was done on the terrain data due to
+limited computing capacity. On order to get an estimate in precision on our
+sample statistics on our dataset the bootstrap algorithm was run 50 times. The
+standard deviation of the 50 best MSE values was calculated. The results are
+summarized in table \ref{tab:boots_error}. The train and test datasets was kept
+the same under all bootstrap runs. 
+% TODO: comment results 
+
+\begin{table}
+    \centering
+    \caption{Mean MSE scores with standard deviation calculated from 50
+    independent bootstrap runs. The minimum MSE scores obtained in the
+Polynomial degree range was used to estimate the statistics.}  
+    \label{tab:boots_error} 
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Regression method & Data & Polynomial degree range & $\lambda $ & mean MSE & std MS \\ 
+        \hline
+        OLS &  Franke Data & 1-12 & & 0.0443&  0.0001 \\
+        \hline
+        OLS & Terrin Data & 1-30 & &    3.0    &     0.2     \\ 
+        \hline
+         
+    \end{tabular} 
+\end{table}
+
+
+\subsubsection{K-fold Cross Validation}
+%%Cross-validation
 %How did we implement it
 %Code snippet
 %and what parameter values we used
 
-%%Cross-validation
-???????????
-%How did we implement it
-%Code snippet
-%and what parameter values we used
+K-fold re-sampling was used to get an idea of how representative out train/test split
+was to the whole dataset. K-fold re-sampling was done on the whole dataset
+($\bm{X} _{data}  $ and $\bm{y} _{data} $). Before our was split 
+, all the data was randomly shuffled. The dataset was the split into
+$N_{splits} = 10 $. MSE was calculated on the predicted value on each test
+split. We tested our own implementation of the K-fold algorithm against
+python's sklearn function, \verb|sklearn.model_selection.KFold|. On the Franke
+data skelarn's method produced similar results as for bootstrap with OLS
+regression (see Figure \ref{fig:kfold_ols_franke} and
+\ref{fig:bootstrap_ols_franke_train}). This was not the case for our own
+implementation. Our own implementation produced at least four times as large
+values compared to sklearn's implementation. We decided to used sklearn's
+implementation for our K-fold analysis.  
+    
+
+The python code for our own implementation of the K-fold algorithm is listed
+below: 
+\begin{lstlisting}[language=Python]
+        # The size of the test fold (n_test_data) is calculated 
+        n_data = len(y_data)
+        n_test_data = int(np.ceil(len(y_data)/n_splits))
+
+        # Data is shuffled by creating a shuffeld array of indices.   
+        idx_shuffled = np.arange(n_data)
+        np.random.shuffle(idx_shuffled)
+
+        mse_kfold_deg = []
+        for i in range(n_splits): 
+            test_idx = idx_shuffled[n_test_data*i:n_test_data*(i+1)]
+            train_idx = np.delete(idx_shuffled, np.s_[n_test_data*i:n_test_data*(i+1)])
+
+            # Get train and test split
+            X_kfold_train = X_data[train_idx,:]
+            y_kfold_train = y_data[train_idx]
+            X_kfold_test = X_data[test_idx,:]
+            y_kfold_test = y_data[test_idx]
+
+            # Use regression_method to predict on test split 
+            y_kfold_pred = self.regression_method(regression_method, X_kfold_train, y_kfold_train, X_kfold_test, lamb = self.lamb)
+
+            # Claculate MSE score for predicted data. 
+            mse = np.mean((y_kfold_test[:,np.newaxis] - y_kfold_pred[:,np.newaxis])**2) 
+            mse_kfold_deg.append(mse)
+
+        # Return mean of MSE predicted on all test splits.  
+        return np.mean(mse_kfold_deg)
+\end{lstlisting}
+We did not mange to find out why our own implementations and sklearn's differed.
+One possible problem with our own method is that the case where the size of the
+dataset is not divisible by number of splits is not handled properly. However, this
+should not be a problem since we used 10 splits in all our analysis. 
+
+
+
+
+
+
+
 
