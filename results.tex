@@ -147,11 +147,11 @@ not need to scale the data.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/b_beta.png}
-    \label{fig:beta_plot}
     \caption{ $\beta _i$ values plotted with respect polynomial degree for our best
     fit model with OLS on the training data, $\bm{X} _{train} $ 
     The colors represent specific $\beta _i$, in order to make it possible to
     track specific $\beta _i$ for different polynomial degrees.      }
+    \label{fig:beta_plot}
 \end{figure}
 
 % Discussion of beta's
@@ -178,7 +178,8 @@ complex parts of our model.
 %For bootstrap: should consider plotting a histogram of the estimators beta_hat^* as this should resemble a pdf. 
 
 %%%%%%%%%%%%%%% Part c  %%%%%%%%%%%%%%%
-% * Explain bias, variance, mse terms (theory) and interpretation 
+% * Explain bias, variance, mse terms (theory) and interpretation - XXX: where
+% is this done?
 % * Bias variance analysis on franke function
 % * discuss in bias variance trade-off in terms of:
 %   * model complexity
@@ -203,30 +204,88 @@ complex parts of our model.
         \label{fig:bootstrap_ols_franke_test}
 \end{figure}
 
-In figure \ref{fig:bootstrap_ols_franke_test} we can see the the bootstrap used on the OLS method on the Franke function for 100 resamples and two different number of datapoints. We see that for the lower number of points we get signs of overfitting, while we do not see this behaviour at these polynomial degrees for 1600 datapoints. We see that for 400 datapoints the optimal bias-variance tradeoff happens at a polynomial degree of around 4 and for 1600 datapoints at around polynomial degree 7.
 
+In figure \ref{fig:bootstrap_ols_franke_test} we can see the bootstrap used
+on the OLS method on the Franke function for 100 resamples and two different
+number of datapoints. We see that for the lower number of points we get signs
+of overfitting, while we do not see this behaviour at these polynomial degrees
+for 1600 datapoints. We see that for 400 datapoints the optimal bias-variance
+tradeoff happens at a polynomial degree of around 4 and for 1600 datapoints at
+around polynomial degree 7. 
 
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400.png}
-    
-%\end{figure}
+This means that our best fit model is depend the size of the dataset. For
+larger dataset sizes the mean value of our data points will resemble more and
+more the real distribution. This is also the case for our training data and
+test data. To achieve over fit the complexity of the model needs to be very
+large.  
 
+In figure \ref{fig:bootstrap_ols_franke_train} the MSE predicted on the training
+data with OLS and bootstrap resampling is plotted as function of polynomial
+degree. Here we see a similar trend as for the predictions with bootstrap on
+the test data. If we had trained the model on the real training data, we would
+expect that the predictions of MSE on the training data approaches zero. Our
+predicted model should be able to 100\% replicate our data, since the model is
+trained the exact same noise. In this scenario it does not make much sense to
+talk about over fitting. Cause we need two independent datasets to predict the
+generalizability of our model. 
 
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_1600.png}
-%\end{figure}
+However in our case we did re sample the training dataset (bootstrap with 100
+resamples) before we trained our
+model. Thus, our re sampled dataset should follow the same distribution, but each
+individual data points would vary from or original training data. As long as
+the number of data points in our original training data is sufficiently large.
+That is, the expected value of our noisy model for the Franke function
+approaches the Franke funciton without noise. We expect that prediction on
+re sampled data VS. a separate test split would yield similar results. By
+comparison of figure \ref{fig:bootstrap_ols_franke_test} (left) and
+\ref{fig:bootstrap_ols_franke_train}, this is what we observe. 
 
 % XXX: Is this expected behaviour?
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/c_bootstrap_ols_n_data_400_train_data.png}
-    \caption{Bootstrap with 100 resamples for the OLS method on the Franke function on the training set with 400 datapoints.}
+    \caption{Bootstrap with 100 resamples for the OLS method on the Franke
+    function on the training set with 400 datapoints.}
     \label{fig:bootstrap_ols_franke_train}
 \end{figure}
 
-To check the speculation of overfitting on the lower number of datapoints we look at figure \ref{fig:bootstrap_ols_franke_train} and we see here that the variance shoots off as the polynomial degree gets to 12. 
+Until now we have discussed our models in terms of MSE. However MSE is clolsy
+related to bias and variance (see eq. \eqref{eq:bias_variance_decomposition}).
+The variance describes the precision on our predicted models. As our model
+complexity increases, it will be able to pick up complex patterns in our
+training data. If we use another training dataset this pattern may not be
+contained in the data. Thus our complex model fit will give different results.
+If our models gets to complex it will describe patters that are unique to the
+training data and not the representative distribution. This is called
+over fitting and can be observed when the variance term rapidly increases with
+model complexity. We previous saw that the MSE rapidly increases after a
+certain polynomial. The reason is that the variance of the model increses, as
+seen in figure \ref{fig:bootstrap_ols_franke_test} b and
+\ref{fig:bootstrap_ols_franke_train}. 
+
+The bias term is expected to go to zero as the model complexity increases. That
+is our expected value of our models is approaching the real function. In our
+results the bias term is decreasing (see fig \ref{fig:bootstrap_ols_franke_test} b and
+\ref{fig:bootstrap_ols_franke_train}), as expected. But after a certain
+polynomial degree the bias term is slightly increseing. This is somewhat
+unexpected. However this may be due to the fact that the variance is
+increseing and it's harder to obtain a good statistic on the real expectation
+value of our model. This may have been resolved by increasing the number of
+bootstrap re samples. It's also worth metntioning that we did not used the
+exact function f(x) to esitamte the bias term. We used out test data, $\bm{y}
+_{test} $. That is our exact function (Franke function) plus added normal
+distributed noise. 
+% This is probably why the bias term does not behave as
+% expected. The statistics on our model (Expectation value) 
+% TODO: think more
+
+
+
+
+
+% To check the speculation of overfitting on the lower number of datapoints we
+% look at figure \ref{fig:bootstrap_ols_franke_train} and we see here that the
+% variance shoots off as the polynomial degree gets to 12. 
 
 %%%%%%%%%%%%%%% Part d %%%%%%%%%%%%%%%
 % Use k-fold and evaluate MEE on test data
