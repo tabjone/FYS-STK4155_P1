@@ -8,6 +8,13 @@
 %scaling of data. Why we did or didn't scale. Critical discussion of this.
 
 %Mention train/test split, 2/3 or 4/5 split is usual. Mention that this is usual and then what we used. Where exactly to mention this? May need to restructure method section a bit.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Source code}
+All our code developed in the project can be found in the following Github
+repository, \url{https://github.com/jensjpedersen/Projects_FYS-STK4155/tree/main/Project1}. Read the README.md for information on the content of the
+different python files and how to use and reproduce the results presented in
+this report.  
+
 
 \subsection{Datasets}
 Our data was generated from a random uniform distribution on the interval [0,
@@ -142,8 +149,7 @@ R^2(\boldsymbol{y}, \tilde{\boldsymbol{y}}) = 1 - \frac{\sum_{i=0}^{n - 1} (y_i 
 $$
 which is used to score the model and we will take this from sklearn's LinearRegression().fit.score.
 
-\subsection{Linear regression}
-\subsubsection{Design matrix} \label{sec:design_matrix} 
+\subsection{Design matrix} \label{sec:design_matrix} 
 
 Our training data was fitted to polynomials up
 to degree 12 in x and y for the Franke function and data, and up to degree 30
@@ -294,7 +300,11 @@ training data was used fro finding the optimal model with OLS}
 In the case of Ridge regression we introduced an array of regularization
 parameters $\lambda = [10^{-6}, 10^{-5}, \hdots, 10^{1}]$. The optimal values
 of beta with ridge regression $\hat{\bm{\beta } } _{Ridge} $ was calculated
-from equation \eqref{eq:beta_ridge}. For implementing equation we used numpy.eye as the iidentity matrix. 
+from equation \eqref{eq:beta_ridge}. For implementing equation we used bumpy.eye as the identity matrix. 
+We compared our own implementation of Ridge to Sklearn's
+(\verb|sklearn.linear_model.Ridge|). Both methods predicted produced the exact
+same best fit models. 
+
 
 \subsubsection{Lasso}
 %%Lasso
