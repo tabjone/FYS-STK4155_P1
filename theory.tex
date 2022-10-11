@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Theory}
+\section{Theory} \label{sec:theory} 
 \subsection{Linear regression}
 %Half and half copied / self written
 In machine learning we call the independent variable $\mathbf{x}$ a feature and the dependent variable $\mathbf{y}$ a response. A regression model aims at finding a likelihood function $p(\mathbf{y}|\mathbf{x})$, that is the conditional distribution for $\mathbf{y}$ with a given $\mathbf{x}$. The estimation of $p(\mathbf{y}|\mathbf{x})$ is made using a data set with $n$ cases $i=0,1,2,...,n-1$ of a response variable $y_i$ and a set of predictor variables $\mathbf{x}_i=[x_{i0}, x_{i1},...,x_{ip-1}]$. The set of these vectors $\mathbf{X}=[\mathbf{x}_{0}\ \mathbf{x}_{1}\ ...\ \mathbf{x}_{n-1}]$ is called the design matrix of the model. 
@@ -161,7 +161,8 @@ $$
 $$
 and by adding and subtracting $\mathbb{E}\left[\mathbf{\tilde{y}}\right]$ in the parenthesis on the right side, we get
 
-\begin{align*}
+\begin{align}
+\label{eq:bias_variance_decomposition} 
 \mathbb{E}\left[(\mathbf{y}-\mathbf{\tilde{y}})^2\right]
 &=\mathbb{E}\left[(\mathbf{f}+\mathbf{\epsilon}-\mathbf{\tilde{y}}+\mathbb{E}\left[\mathbf{\tilde{y}}\right]-\mathbb{E}\left[\mathbf{\tilde{y}}\right])^2\right]
 \\
@@ -174,7 +175,7 @@ and by adding and subtracting $\mathbb{E}\left[\mathbf{\tilde{y}}\right]$ in the
 &= \mathbb{E}\left[(\mathbf{f}-\mathbb{E}[\mathbf{\tilde y}])^2 \right]  +\mathbb{E}\left[(\mathbf{\tilde y}-\mathbb{E}[\mathbf{\tilde{y}}])^2\right] + \mathbb{E}[\epsilon^2]
 \\
 &=\left(\mbox{Bias}\left[{\tilde y}\right] \right)^2 + \mbox{Var}\left[{\tilde f} \right] + \sigma^2,
-\end{align*}
+\end{align}
 
 where we used that $\mathbb{E}\left[\mathbb{E}[\mathbf{\tilde y}]\right]=\mathbb{E}[\mathbf{\tilde y}]$, 
 

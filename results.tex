@@ -356,9 +356,9 @@ generalizable to the whole dataset.
 
 \begin{figure}[H]
     \centering
+    \includegraphics[width=0.8\textwidth]{Figures/e_ridge_bias_variance_lamb_0_001.png}
     \caption{Ridge resgression on the Franke function.}
     \label{fig:ridge_blabla}
-    \includegraphics[width=0.8\textwidth]{Figures/e_ridge_bias_variance_lamb_0_001.png}
 \end{figure}
 
 
@@ -371,12 +371,10 @@ generalizable to the whole dataset.
 
 \begin{figure}[H]
     \centering
+    \includegraphics[width=\textwidth]{Figures/e_ridge_kfold_n_10.png}
     \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Ridge regression on the Franke function.}
     \label{fig:e_ridge_kfold}
-    \includegraphics[width=\textwidth]{Figures/e_ridge_kfold_n_10.png}
 \end{figure}
-
-Now we want to find the optimal $\lambda$ parameter 
 
 
 %%%%%%%%%%%%%%% Part f %%%%%%%%%%%%%%%
@@ -387,12 +385,45 @@ Now we want to find the optimal $\lambda$ parameter
 % * MSE analysis with kfold
 
 
+In Figure \ref{fig:f_lasso_bootstrap} the MSE predicted on the test data with
+Lasso regression and Bootstrap re sampling is plotted as function of polynomial
+degree with respect different choices of the regularization parameter $\lambda
+$. Form this heatmap we can observe that decreasing with increasing polynomial
+degree for lower order polynomials and small values for $\lambda $. That is,
+the bias of our model is decreasing. However for higher values of $\lambda $
+the MSE score is more or less constant with respect to polynomial degree.
+Regularization parameters larger than 0.01 zeros out the beta values for our
+model. We observer that the best values for MSE is obtained for polynomial
+degree 12. Lasso regression gives similar results as for Ridge regression, with
+slightly higher MSE scores. The best fit model model with ridge regression is
+observed for lower polynomial degree's (range 4-8). 
+
+In Figure \ref{fig:f_lasso_kflod} the MSE predicted on the test data with Lasso
+regression and K-fold cross validation is plotted as function of polynomial
+degree with different values of $\lambda $. Again the magnitude of MSE scores
+largely agrees with those obtained with Bootstrap. Generally MSE scores is
+slightly larger than for Bootstrap. This is however not case for polynomial
+degree 11-12 where the K-fold methods gives us lower MSE scores compared
+Bootstrap.  
+
+In table \ref{tab:franke_mse_best} our best fit models for the different
+re sampling and regression methods are summarized. As observed from the heat
+maps, Lasso regression tend to decrease with increasing polynomial degree and
+gives us the lowest MSE score for polynomial degree 11 and 12 with Bootstrap and
+K-fold cross validation respectively. Ride and OLS regression gives us the best
+fit model in the polynomial degree range of 4-6. Lasso regression performs the
+worst it terms of MSE. OLS and Ridge gives similar MSE scores for their best
+fit models. However Ridge slightly outperforms OLS, for K-fold. However the
+opposite is true for Bootstrap re sampling. The disadvantage with OLS compared
+to Ridge is that it is very prone to over fitting.  
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/f_lasso_bootstrap_n_100.png}
     \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
     \label{fig:f_lasso_bootstrap}
 \end{figure}
+
 
 \begin{figure}[H]
     \centering
