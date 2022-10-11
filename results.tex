@@ -338,6 +338,16 @@ increases. This causes high variance in betas's (see eq.
 This is not seen in case of Ridge regression.      
 % TODO: how ridge shrinks betas
 
+In Figure \ref{fig:e_ridge} the predicted MSE with bootstrap re sampling on the test data as function of
+polynomial degree and different $\lambda $ is plotted in a heat map. We observe
+that the variation in MSE decreases with increasing $\lambda $. Thus, high
+$\lambda 's$ tends to shrink the $\beta's $ to zero.  
+
+In Figure \ref{fig:e_ridge_kfold} the same heat map as for \ref{fig:e_ridge} is
+plotted, but instead with K-fold re sampling. Again we observe similar values
+as for bootstrap. Thus, the statistics inferred with bootstrap re sampling is
+generalizable to the whole dataset. 
+% TODO: write more
 
 
 
