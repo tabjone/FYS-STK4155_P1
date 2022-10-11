@@ -18,10 +18,25 @@ this report.
 
 \subsection{Datasets}
 Our data was generated from a random uniform distribution on the interval [0,
-1] using the numpys random module. Two arrays was generated at random, with each containing n=20 data points. 
+1] using the numpy's random module. Two arrays was generated at random, with each containing n=20 data points. 
 These arrays, x and y was combined in two mesh grids, X and Y each of size n x n. Thus, our
 total dataset consisted of 400 data points. Before any fitting was done on the
 data the mesh grids was reshaped into one dimensional arrays.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Scaling of Data}
+
+% Scaling - TODO - put in method section? 
+If our
+predictors represent different scales, then it is important to standardize the
+design matrix. 
+And as the x and y data is on the same interval $[0, 1]$ both for the Franke
+and Terrain data, we do
+not need to scale the data. That is, the magnitude of our best fit polynomial
+coefficients lives on the same scale independent of features corresponding x
+and y data. 
+% TODO: explain why
+
 
 \subsubsection{Franke Function}
 %What is it
@@ -56,7 +71,7 @@ The following step by step guide can be used to generate a similar dataset:
 
 
 \begin{mdframed}[backgroundcolor=black!10]
-\begin{enumerate}[noitemsep]
+\begin{enumerate}
 \item Generate two arrays x and y, each with uniform distributed values in the
 interval [0, 1] with N = 20 data points. 
 \item Create a mesh grid of x values (X) and y values (Y), both with shapes $N
@@ -337,7 +352,7 @@ N_{boots} $. Different scores (MSE, Bias, Variacne, R2) was calculated in this
 matrix. 
 
 Bootstrap was used to estimate sample statistics from our dataset. $N_{boots} =
-1100$ bootstrap iterations was used to predict sample statistics on the Franke
+100$ bootstrap iterations was used to predict sample statistics on the Franke
 data. Only $N_{boots} = 20 $ iterations was done on the terrain data due to
 limited computing capacity. On order to get an estimate in precision on our
 sample statistics on our dataset the bootstrap algorithm was run 50 times. The

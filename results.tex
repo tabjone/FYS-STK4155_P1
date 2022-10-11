@@ -96,7 +96,9 @@ test-data is plotted as for the left figure.}
          \centering
          \includegraphics[width=\textwidth]{Figures/b_r2.png}
      \end{subfigure}
-        \caption{Mean squared error and score function for the Ordinary Least Squares (OLS) method on the Franke function with N=????? for training and test data with a test/train split of 0.2}
+        \caption{Mean squared error and score function for the Ordinary Least
+        Squares (OLS) method on the Franke function for training and test data
+    with a test/train split of 0.2}
         \label{fig:mse_and_score_franke}
 \end{figure}
 
@@ -121,13 +123,6 @@ similar distributed datasets. This is the exact behavior we observe in figure
 \ref{fig:mse_and_score_franke}. However, the effect if over fit is not
 presented very well cause of the low polynomial degree. 
 
-% Scaling - TODO - put in method section? 
-If our
-predictors represent different scales, then it is important to standardize the
-design matrix. 
-And as the x and y data is on the same interval $[0, 1]$ we do
-not need to scale the data.
-% TODO: explain why
 
 %\begin{figure}[H]
 %    \centering
@@ -364,9 +359,9 @@ generalizable to the whole dataset.
 
 \begin{figure}[H]
     \centering
+    \includegraphics[width=1\textwidth]{Figures/e_ridge_n_boots_100.png}
     \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for bootstrap on Ridge for on the Franke function.}  
     \label{fig:e_ridge} 
-    \includegraphics[width=1\textwidth]{Figures/e_ridge_n_boots_100.png}
 \end{figure}
 
 \begin{figure}[H]
