@@ -373,7 +373,7 @@ generalizable to the whole dataset.
     \centering
     \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Ridge regression on the Franke function.}
     \label{fig:e_ridge_kfold}
-    \includegraphics[width=0.8\textwidth]{Figures/e_ridge_kfold_n_10.png}
+    \includegraphics[width=\textwidth]{Figures/e_ridge_kfold_n_10.png}
 \end{figure}
 
 Now we want to find the optimal $\lambda$ parameter 
@@ -389,16 +389,16 @@ Now we want to find the optimal $\lambda$ parameter
 
 \begin{figure}[H]
     \centering
-	\caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
-	\label{fig:f_lasso_bootstrap}
-    \includegraphics[width=0.8\textwidth]{Figures/f_lasso_bootstrap_n_100.png}
+    \includegraphics[width=\textwidth]{Figures/f_lasso_bootstrap_n_100.png}
+    \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
+    \label{fig:f_lasso_bootstrap}
 \end{figure}
 
 \begin{figure}[H]
-	\caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
-	\label{fig:f_lasso_kflod}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/f_lasso_kfold_n_10.png}
+    \includegraphics[width=\textwidth]{Figures/f_lasso_kfold_n_10.png}
+    \caption{Correlation between MSE, the hyperparameter $\lambda$ and polyonmial degree for Cross-Valdidation for Lasso regression on the Franke function.}
+    \label{fig:f_lasso_kflod}
 \end{figure}
 
 
@@ -432,6 +432,12 @@ Now we want to find the optimal $\lambda$ parameter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Terrain data}
+
+The best MSE values obtained with different regression and re sampling methods
+is listed in table \ref{tab:terrain_mse_best}. Figure \ref{fig:terrain_model}
+shows our dataset (left figures) compared to our best fit model with OLS (right
+figure). 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/terrain_data_and_model_ols_best.png}
@@ -442,26 +448,102 @@ takes values in intervall [0, 1]. This interval scales to 30m in real
 coordinates. The left figure shows our best fit model obtained with OLS for
 polynomial degree 18. Again the training- and test-data is plotted as in the
 left figure.}  
+    \label{fig:terrain_model} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \includegraphics[width=\textwidth]{Figures/terrain_best_ols_ridge_lasso_boots.png}
         \caption{Mean of MSE scores calculated with bootstrap on the terrain data.\\ $n_{\text{boots}} =
         20$ re-samples was used. The mean MSE predicted on the test-data is plotted as
     function of polynomial degree for OLS-, Ridge- ($\lambda = 10^{6}$) and
 Lasso-regression ($\lambda = 10^{-6})$   }  
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \includegraphics[width=\textwidth]{Figures/terrain_best_ols_ridge_lasso_kfold.png}
         \caption{Mean of MSE predicted on each test fold with use of the K-fold
         re-sampling technique. A total of ten folds was used. The MSE score is plotted as a function
     of polynomial degree for OLS-, Ridge- ($\lambda = 0.1$) and Lasso-regression
 ($\lambda = 10^{-4}$)}  
     \end{subfigure}
+
+    \caption{Comparison of OLS, Ridge and Lasso regression}  
+    \label{fig:terrain_ols_vs_ridge_vs_lasso} 
 \end{figure}
 
+% Comparison of OLS, Ridge and Lasso
+In Figure \ref{fig:terrain_ols_vs_ridge_vs_lasso} the MSE on the terrain test
+data is predicted with for the best fit regression methods with Bootstrap and
+K-fold cross validation. The MSE socre obtined with OLS and bootstrap reaches a minima for
+polynomial degree 18. This is not the case for K-fold cross validation, where
+the MSE explodes for polynomial degree 5 and higher. The bootstrap re sampling
+was done on the selected training data. If we had chosen a new training data split,
+we would expect a different result for our MSE score. This is what we show with
+the K-fold technique. The terrain is to complex, with to few data points to
+create a generalizable model of the terrain with OLS regression. For our
+optimal values of regularization parameters with ridge and lasso regression, we
+observe a trend of decreasing MSE scores with increasing polynomial degree. For
+ridge regression  and lasso regression we got a minima for polynomial degree 18
+and 30 respectively. Both gives scores that are higher than with OLS. But we
+dont see the increase in variance as for OLS regression. The MSE score for
+Lasso and Ridge is almost constant from polynomial degree 14-30. The reason is
+that, our
+penalty term kills some of the higer order beta terms (highly correlated
+features) that causes the unstable % XXX double check that this is correct
+behaviour seen with OLS. We observe that Lasso produces a higer MSE vale than
+with
+Ridge regression. This is probably due to the fact that Lasso zeros out the highly correlated
+features compared to Ridge that shrinks the beta's. 
+
+The best regularization parameters with Ridge regression and bootstrap was found from
+inspection of Figure \ref{fig:g_ridge_boost_heatmap}. Here all the MSE scores
+predicted on our training data is plotted from polynomial degree 10-30 and
+regularization parameters. We observer that all MSE scores tend to increase for
+higher values of $\lambda $. That is, the complexity of our model is reduced
+for higher values of $\lambda $
+
+In figure \ref{fig:g_ridge_kfold_heatmap} the same heat map is plotted, but
+with K-fold cross validation instead of bootstrap. Here we observe almost the
+opposite trend than for bootstrap re sampling. The MSE score tends to explode for
+small values of $\lambda $ and with increasing polynomial degree. It 
+indicates that complexity of data is not well represented by the higer order
+$\beta $'s. Thus, by intruding more dominant penalty term the complexity of our
+model is reduced and we don't get a problem with over fitting. 
+
+In Figure \label{fig:g_lasso_boots_heatmap} the heat map for Lasso regression
+with bootstrap re sampling is plotted. The heatmap is plotted from polynomial
+degree 10-30. However our best MSE score was found at polynomial degree 7 with
+$\lambda = 0.001$. The reason why this value is not shown in the heat map is to
+keep it consistent with the other heat maps for comparison reasons. Lasso
+regression yield higher values for the MSE than ridge regression. Generally the
+best scores for the different $\lambda $ is seen for polynomial 30. Also the
+standard deviation with respect to Polynomial degree is generally lower than
+for ridge. That is the penalty the correlated highly correlated features is
+higher than for ridge.  
+
+In figure \ref{fig:g_lasso_boots_heatmap} the heat map with Lasso regression
+and K-fold cross validation is plotted. Again, as for ridge regression we
+observe over fitting for the lower values of $\lambda $.
+The MSE scores increases from polynomial degree 17-30 for $\lambda = 10^{-6}$
+and $\lambda  = 10^{-5}$. For $\lambda = 0.1$ and $\lambda = 1.0$ the MES score
+is almost constant as function of polynomial degree. This is because the
+$\beta's$ is zeroed out. Lasso gives is less forgiving than Ridge which shrinks
+the parameters for $\beta$. 
+
+As explained in section \ref{sec:theory} the MSE can be decomposed in a bias,
+variance and irreducible error term. This bias variance decompositions is shown
+in Figure \ref{fig:g_ols_bias_variance_boots} for OLS regression with
+bootstrap, predicted on our test data. Again as shown for the Franke
+data, we observe that Large increase on our MSE score for polynomial 30 is
+explained by the variance term. In figure
+\ref{fig:g_ols_ridge_lasso_boots_n_20} we observer the R2 score for the same
+model. The R2 score is highly related to the MSE and we observe the opposite
+trend. We chose not to include this bias variance plot for Ridge and Lasso
+regression. Because this does not provide us any more information than the MSE.
+We know that the reduction in MSE for low polynomial is due to the decrease in
+bias. And the increase for higer order polynomials is due to the increase in
+variance. 
 
 
 \begin{figure}
@@ -482,7 +564,6 @@ Lasso-regression ($\lambda = 10^{-6})$   }
 \label{fig:g_ols_sub_plot}
 \end{figure}
 
-In figure \ref{fig:g_ols_sub_plot} we can see the score function and bias-variance plot for the OLS method using bootstrapping with 20 re-samples on the terrain data.
 
 \begin{figure}[H]
     \centering
@@ -551,18 +632,21 @@ In figure \ref{fig:g_ridge_boost_heatmap}, \ref{fig:g_ridge_kfold_heatmap}, \ref
     \end{tabular} 
 \end{table}
 
-We see in table \ref{tab:terrain_mse_best} that the optimal polynomial degrees are higher for Ridge and Lasso both with bootstrap and Cross-Validation.
+% We see in table \ref{tab:terrain_mse_best} that the optimal polynomial degrees are higher for Ridge and Lasso both with bootstrap and Cross-Validation.
 
 
 
-\begin{figure}[H]
-    \centering
-	\label{fig:g_ols_ridge_lasso_boots}
-	\caption{Mean squared error as a function of polynomial degree for the regression methods OLS, Ridge and Lasso using ? number of bootstraps on the terrain data.}
-    \includegraphics[width=0.8\textwidth]{Figures/g_ols_ridge_lasso_boots_n_20.png}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+% 	\label{fig:g_ols_ridge_lasso_boots}
+% 	\caption{Mean squared error as a function of polynomial degree for the regression methods OLS, Ridge and Lasso using ? number of bootstraps on the terrain data.}
+%     \includegraphics[width=0.8\textwidth]{Figures/g_ols_ridge_lasso_boots_n_20.png}
+% \end{figure}
 
-In figure \ref{fig:g_ols_ridge_lasso_boots} we can see the MSE for the three different regression methods. We see that Lasso and Ridge regression is more stable but OLS beats both methods at around polynomial degree 12. But then we see overfitting of the OLS method at higher degree polynomials.
+% In figure \ref{fig:g_ols_ridge_lasso_boots} we can see the MSE for the three
+% different regression methods. We see that Lasso and Ridge regression is more
+% stable but OLS beats both methods at around polynomial degree 12. But then we
+% see overfitting of the OLS method at higher degree polynomials.
 
 
 
