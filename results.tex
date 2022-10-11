@@ -300,7 +300,25 @@ distributed noise.
     \label{fig:kfold_ols_franke}
 \end{figure}
 
-In figure \ref{fig:kfold_ols_franke} we can see the MSE of Cross-validation with 10 spilts on the Franke function using OLS. This is on the test data. We see that polynomial degree over 8 produces weird results. This can be because of overfitting. 
+In figure \ref{fig:kfold_ols_franke} we can see the MSE of Cross-validation
+with 10 splits on the Franke function using OLS. This is on the test data. We
+see that polynomial degree over 8 produces weird results. This can be because
+of over fitting. 
+K-fold cross validation produces similar results as for bootstrap up to degree
+8. Then the MES predicted for k-fold rapidly increases for polynomial degree 9.
+For bootstrap this increases is seen for polynomial 12. We used bootstrap to
+infer statistics on our data. And we re sampled the training data. Thus
+statistic inferred from our bootstrap re sampling is representative to how our
+training data is distributed. If our test and training data has different
+distributions, or the number of data points is to small to estimate the real
+expectation value of our data. Then, K-fold and Bootstrap is expected to
+disagree on statistics. K-fold divides the dataset in splits and tests/trains
+on all the splits. In this way we can be sure that our scores is not biased
+towards our particular train/test split. Our results from bootstrap and K-fold
+largely argreess with each other. This means that our original chosen
+train/test split is representative four our dataset. Thus, if we had done a new
+train test split, it's expected that the results would have been similar.
+Hence, the precision of our generalized model is good. 
 
 %%%%%%%%%%%%%%% Part e %%%%%%%%%%%%%%%
 % * bootstrap analysis for ridge as in part c
@@ -309,7 +327,9 @@ In figure \ref{fig:kfold_ols_franke} we can see the MSE of Cross-validation with
 % * study bias variance trade off for different values of lambda 
 
 The minimum MSE from Ridge regression was found for polynomial degree of 6 with
-the hyper parameter, $\lambda = 0.001$. This is seen in figure \ref{fig:ridge_blabla}. Here we are to low in polynomial degree to see the typical bias-variance pattern.
+the hyper parameter, $\lambda = 0.001$. This is seen in figure
+\ref{fig:ridge_blabla}. Here we are to low in polynomial degree to see the
+typical bias-variance pattern.
 
 \begin{figure}[H]
     \centering
