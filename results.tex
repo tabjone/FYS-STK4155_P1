@@ -326,10 +326,23 @@ Hence, the precision of our generalized model is good.
 % * Compare results to those obtained in part b-d
 % * study bias variance trade off for different values of lambda 
 
-The minimum MSE from Ridge regression was found for polynomial degree of 6 with
+The minimum MSE from Ridge regression with bootstrap re sampling was found for polynomial degree of 6 with
 the hyper parameter, $\lambda = 0.001$. This is seen in figure
-\ref{fig:ridge_blabla}. Here we are to low in polynomial degree to see the
-typical bias-variance pattern.
+\ref{fig:ridge_blabla}. There is no sign of over fitting in this figure. Both
+the variance, bias and hence MSE are approximate constant for polynomial 3-12.
+This is because we have introduced a regularization parameter that's sets an
+upper bound on the second norm of the betas. For OLS when we increase the
+polynomial degree, the number of linearly depended columns in our design matrix
+increases. This causes high variance in betas's (see eq.
+\ref{eq:variance_beta}), and hence a high variance in our model.  
+This is not seen in case of Ridge regression.      
+% TODO: how ridge shrinks betas
+
+
+
+
+% Here we are to low in polynomial degree to see the
+% typical bias-variance pattern.
 
 \begin{figure}[H]
     \centering
